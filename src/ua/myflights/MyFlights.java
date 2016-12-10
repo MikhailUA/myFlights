@@ -1,5 +1,6 @@
 package ua.myflights;
 
+import java.awt.EventQueue;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ public class MyFlights {
 	private static Thread timer = new Thread(spentTime);
 	
 	public static void main(String[] args) throws IOException, InterruptedException, ParseException {
-		
+				
 		String origin, destination,date;
 		Flight flight = null;
 
@@ -27,7 +28,7 @@ public class MyFlights {
 		
 			//spentTime.startTimer();
 			//flight = Request.getData(origin,destination, date);
-			flight = Request.getData("KIEV-sky","HRK-sky", "2016-12-15");
+			flight = Request.getData("HRK-sky", "KIEV-sky","2016-12-15");
 			//spentTime.stopTimer();
 			System.out.println(flight.getDestinationPlace() + " " + flight.getPrice());
 		}

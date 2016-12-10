@@ -14,6 +14,10 @@ public class Flight {
 		this.Price = price;
 	} 
 	
+	public Flight() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setOriginPlace(String place){
 		this.OriginPlace = place;
 	}
@@ -25,6 +29,10 @@ public class Flight {
 	public void setDate(String date){
 		this.Date = date;
 	}
+	
+	public void setPrice(double price){
+		this.Price = price;
+	}	
 	
 	public String getOriginPlace(){
 		return this.OriginPlace;
