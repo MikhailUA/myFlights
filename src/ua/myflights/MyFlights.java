@@ -9,30 +9,72 @@ import org.json.simple.parser.ParseException;
 
 public class MyFlights { 
 
-	public static SpentTime spentTime = new SpentTime();
-	private static Thread timer = new Thread(spentTime);
+	static mainView window;
 	
-	public static void main(String[] args) throws IOException, InterruptedException, ParseException {
-				
-		String origin, destination,date;
-		Flight flight = null;
-
-		timer.start();
+	public static void main(String[] args) {
 		
-		while(true){			
-			Scanner scn = new Scanner(System.in);
-			//System.out.println(scn.nextLine());
-			origin = scn.nextLine();
-			destination = scn.nextLine();
-			date = scn.nextLine();
-		
-			//spentTime.startTimer();
-			//flight = Request.getData(origin,destination, date);
-			flight = Request.getData("HRK-sky", "KIEV-sky","2016-12-15");
-			//spentTime.stopTimer();
-			System.out.println(flight.getDestinationPlace() + " " + flight.getPrice());
-		}
-		
+			
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						mainView window = new mainView();
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
 	}	
-		
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+public static SpentTime spentTime = new SpentTime();
+private static Thread timer = new Thread(spentTime);
+
+
+
+String origin, destination,date;
+Flight flight = null;
+
+timer.start();
+
+while(true){			
+	Scanner scn = new Scanner(System.in);
+	//System.out.println(scn.nextLine());
+	origin = scn.nextLine();
+	destination = scn.nextLine();
+	date = scn.nextLine();
+
+	//spentTime.startTimer();
+	//flight = Request.getData(origin,destination, date);
+	flight = Request.getData("HRK-sky", "KIEV-sky","2016-12-15");
+	//spentTime.stopTimer();
+	System.out.println(flight.getDestinationPlace() + " " + flight.getPrice());
+}*/

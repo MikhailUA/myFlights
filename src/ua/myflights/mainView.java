@@ -27,33 +27,25 @@ public class mainView {
 	private JLabel lblTo;
 	private JLabel lblFrom;
 	private JList list;
-	private JTable searchResultsTable;
-	private static SearchResultsTableModel searchResultsTableModel;
 	private JTextField dateFrom;
 	private JLabel lblSearchResults;
 	private JLabel lblCity;
 	private JLabel lblDate;
 	private JButton btnAddDestination;
 	private JLabel lblUsernameUser;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					mainView window = new mainView();
-					window.frmMyflights.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	private JTable searchResultsTable;
+	private static SearchResultsTableModel searchResultsTableModel = new SearchResultsTableModel();
+	
+	private JTable myFlightsTable;
+	private static SearchResultsTableModel myFlightsTableModel = new SearchResultsTableModel();
+	
 
 	/**
 	 * Create the application.
+	 */
+	/**
+	 * @wbp.parser.entryPoint
 	 */
 	public mainView() {
 		initialize();
@@ -65,9 +57,10 @@ public class mainView {
 	private void initialize() {
 		frmMyflights = new JFrame();
 		frmMyflights.setTitle("myFlights");
-		frmMyflights.setBounds(100, 100, 633, 465);
+		frmMyflights.setBounds(100, 100, 633, 527);
 		frmMyflights.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMyflights.getContentPane().setLayout(null);
+		frmMyflights.setVisible(true);
 		
 		placeTo = new JTextField();
 		placeTo.setBounds(146, 56, 86, 20);
@@ -97,6 +90,14 @@ public class mainView {
 		frmMyflights.getContentPane().add(lblDate);
 		
 		btnAddDestination = new JButton("Add Destination");
+		btnAddDestination.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				int[] a = new int[5];
+				a = searchResultsTable.getSelectedRows();
+				myFlightsTableModel.addFlight(searchResultsTableModel.getRowById(a[0]));
+			}
+		});
 		btnAddDestination.setBounds(50, 235, 117, 23);
 		frmMyflights.getContentPane().add(btnAddDestination);
 		
@@ -110,8 +111,7 @@ public class mainView {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					SearchController.searchFlights(placeFrom.getText(),placeTo.getText(),dateFrom.getText());
-					SearchController.showSearchResults();
+					SearchController.searchFlights(placeFrom.getText(), placeTo.getText(), dateFrom.getText());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -138,78 +138,48 @@ public class mainView {
 		
 		list = new JList();
 		list.setBounds(50, 121, 390, 50);
-	//	frame.getContentPane().add(list);
-		
-		searchResultsTableModel = new SearchResultsTableModel();
+
 		searchResultsTable = new JTable(searchResultsTableModel);
-		searchResultsTable.setFillsViewportHeight(true);
-		JScrollPane container = new JScrollPane(searchResultsTable);
-		container.setBounds(49, 130, 390, 100);
+		//searchResultsTable.setFillsViewportHeight(true);
+		JScrollPane SRcontainer = new JScrollPane(searchResultsTable);
+		SRcontainer.setBounds(49, 130, 390, 100);
 	
-		frmMyflights.getContentPane().add(container);
+		frmMyflights.getContentPane().add(SRcontainer);
+		
+		myFlightsTable = new JTable(myFlightsTableModel);
+		JScrollPane myFcontainer = new JScrollPane(myFlightsTable);
+		myFcontainer.setBounds(50, 299, 390, 100);
+		
+		frmMyflights.getContentPane().add(myFcontainer);
+		
+		JLabel lblMyDestinations = new JLabel("My Destinations:");
+		lblMyDestinations.setBounds(50, 281, 118, 14);
+		frmMyflights.getContentPane().add(lblMyDestinations);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setBounds(50, 405, 117, 23);
+		frmMyflights.getContentPane().add(btnRefresh);
+		
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.setBounds(174, 405, 117, 23);
+		frmMyflights.getContentPane().add(btnDelete);
+		
+		btnDelete.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				myFlightsTableModel.deleteSelected(myFlightsTable.getSelectedRow());
+			}
+			
+		});
 		
 	}
 
 	public static void show(ArrayList<Flight> flights) {
-		searchResultsTableModel.add(flights);
+		searchResultsTableModel.addFlights(flights);
 	}		
-	
-	
-	public SearchResultsTableModel getSearchResultsTableModel(){
-		return searchResultsTableModel;
-	}
 }
 
 
-class SearchResultsTableModel extends AbstractTableModel{
-
-	private String[] columnNames = {"From", "To","Price"};
-	private ArrayList<Flight> flights;
-
-	public SearchResultsTableModel(){
-		flights = new ArrayList<Flight>();
-	}
-	
-	public void add(ArrayList<Flight> flightsFounded){
-		flights.addAll(flightsFounded);
-		fireTableDataChanged();
-	}
-	
-	@Override
-	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return columnNames.length;
-	}
-
-	@Override
-	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return flights.size();
-	}
-
-	@Override
-	public Object getValueAt(int row, int column) {
-
-		Flight fl = flights.get(row);
-		Object value = null;
-		
-		switch (column){
-			case 0:
-				value = fl.getOriginPlace();
-			break;
-			case 1:
-				value = fl.getDestinationPlace();
-			break;
-			case 2:
-				value = fl.getPrice();
-			break;
-		}
-		
-		return value;
-	}
-	
-	 public String getColumnName(int col) {
-        return columnNames[col].toString();
-    }
- 	
-}  
