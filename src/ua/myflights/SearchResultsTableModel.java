@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 class SearchResultsTableModel extends AbstractTableModel{
 
-	private String[] columnNames = {"From", "To","Price"};
+	private String[] columnNames = {"From", "To", "Price", "Duration"};
 	private ArrayList<Flight> flights;
 
 	public SearchResultsTableModel(){
@@ -14,15 +14,14 @@ class SearchResultsTableModel extends AbstractTableModel{
 	}
 	
 	public void addFlights(ArrayList<Flight> flightsFounded){
-		flights.addAll(flightsFounded);
+		flights = flightsFounded;
 		fireTableDataChanged();
 	}
 	
 	public void addFlight(Flight f){
 		flights.add(f);
 		fireTableDataChanged();
-	}	
-	
+	}		
 	
 	@Override
 	public int getColumnCount() {
@@ -44,13 +43,16 @@ class SearchResultsTableModel extends AbstractTableModel{
 		
 		switch (column){
 			case 0:
-				value = fl.getOriginPlace();
+				value = fl.getOriginStationId();
 			break;
 			case 1:
-				value = fl.getDestinationPlace();
+				value = fl.getDestinationStationId();
 			break;
 			case 2:
 				value = fl.getPrice();
+			break;
+			case 3:
+				value = fl.getDuration();
 			break;
 		}
 		

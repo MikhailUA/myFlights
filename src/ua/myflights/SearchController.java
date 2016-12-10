@@ -12,9 +12,9 @@ public class SearchController {
 	
 	public static void searchFlights(String From, String To, String date) throws IOException, InterruptedException, ParseException{
 		//flight = Request.getData("HRK-sky", "KIEV-sky","2016-12-15");
-		flights =  new ArrayList<Flight>();
-		flight = Request.getData(From, To, date);	
-		flights.add(flight);
+		//flights =  new ArrayList<Flight>();
+		//flights = Request.getData(From, To, date);	
+		flights = Request.getData(From, To, date);
 		MyFlights.window.show(flights);
 	}	
 }
