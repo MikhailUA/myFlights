@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 class SearchResultsTableModel extends AbstractTableModel{
 
-	private String[] columnNames = {"From", "To", "Price", "Duration"};
+	private String[] columnNames = {"From", "To", "Price", "Duration", "Departure", "Arrival"};
 	private ArrayList<Flight> flights;
 
 	public SearchResultsTableModel(){
@@ -43,16 +43,22 @@ class SearchResultsTableModel extends AbstractTableModel{
 		
 		switch (column){
 			case 0:
-				value = fl.getOriginStationId();
+				value = fl.getOriginStationName();
 			break;
 			case 1:
-				value = fl.getDestinationStationId();
+				value = fl.getDestinationStationName();
 			break;
 			case 2:
 				value = fl.getPrice();
 			break;
 			case 3:
 				value = fl.getDuration();
+			break;
+			case 4:
+				value = fl.getDepartureTime();
+			break;
+			case 5:
+				value = fl.getArrivalTime();
 			break;
 		}
 		

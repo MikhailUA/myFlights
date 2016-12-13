@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.13" icons="true">  
+  <object id="1" language="java" name="ua.myflights.SpentTime" project="myFlights" 
+    file="/myFlights/src/ua/myflights/SpentTime.java" binary="false" label="spentTime" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="2" language="java" name="ua.myflights.SearchResultsTableModel" project="myFlights" 
+    file="/myFlights/src/ua/myflights/SearchResultsTableModel.java" binary="false" label="searchResultsTableModel" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="3" language="java" name="ua.myflights.SearchController" project="myFlights" 
+    file="/myFlights/src/ua/myflights/SearchController.java" binary="false" label="searchController" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="4" language="java" name="ua.myflights.SearchBoxModel" project="myFlights" 
+    file="/myFlights/src/ua/myflights/SearchBoxModel.java" binary="false" label="searchBoxModel" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="5" language="java" name="ua.myflights.RequestDataContainer" project="myFlights" 
+    file="/myFlights/src/ua/myflights/RequestDataContainer.java" binary="false" label="requestDataContainer" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="6" language="java" name="ua.myflights.Request" project="myFlights" 
+    file="/myFlights/src/ua/myflights/Request.java" binary="false" label="request" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="7" language="java" name="ua.myflights.Place" project="myFlights" 
+    file="/myFlights/src/ua/myflights/Place.java" binary="false" label="place" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="8" language="java" name="ua.myflights.MySqlConnection" project="myFlights" 
+    file="/myFlights/src/ua/myflights/MySqlConnection.java" binary="false" label="mySqlConnection" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="9" language="java" name="ua.myflights.MyFlights" project="myFlights" 
+    file="/myFlights/src/ua/myflights/MyFlights.java" binary="false" label="myFlights" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="10" language="java" name="ua.myflights.mainView" project="myFlights" 
+    file="/myFlights/src/ua/myflights/mainView.java" binary="false" label="mainView" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="11" language="java" name="ua.myflights.Flight" project="myFlights" 
+    file="/myFlights/src/ua/myflights/Flight.java" binary="false" label="flight" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="259" y="0"/>  
+  </object>  
+  <object id="12" language="java" name="ua.myflights.SearchController" project="myFlights" 
+    file="/myFlights/src/ua/myflights/SearchController.java" binary="false" label="searchController1" type="class" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>  
+  </object>
+</sequence-diagram>

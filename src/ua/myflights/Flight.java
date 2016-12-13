@@ -3,7 +3,10 @@ package ua.myflights;
 public class Flight {
 
 	private String OriginStationId;
-	private String DestinationStatinId;
+	private String OriginStationName;
+	private String DestinationStationId;
+	private String DestinationStationName;
+	
 	private String Date;
 	private double Price;
 	
@@ -13,9 +16,11 @@ public class Flight {
 	private String ArrivalTime;
 	private String DepartureTime;
 	
+	
+	
 	public Flight(String originPlace, String destination, String date, double price){
 		this.OriginStationId = originPlace;
-		this.DestinationStatinId = destination;
+		this.DestinationStationId = destination;
 		this.Date = date;
 		this.Price = price;
 	} 
@@ -29,7 +34,7 @@ public class Flight {
 	}
 	
 	public void setDestinationStationId(String place){
-		this.DestinationStatinId = place;
+		this.DestinationStationId = place;
 	}
 	
 	public void setDate(String date){
@@ -49,7 +54,7 @@ public class Flight {
 	}
 	
 	public String getDestinationStationId(){
-		return this.DestinationStatinId;
+		return this.DestinationStationId;
 	}
 	
 	public double getPrice(){
@@ -82,6 +87,25 @@ public class Flight {
 
 	public void setDuration(long duration) {
 		Duration = duration;
+	}
+
+	public void setOriginStationName(String Name) {
+		OriginStationName = Name;
+	}
+
+	public void setDestinationStationName(String Name) {
+		// TODO Auto-generated method stub
+		DestinationStationName = Name;
+	}
+
+	public String getOriginStationName() {
+		// TODO Auto-generated method stub
+		return this.OriginStationName;
+	}
+
+	public String getDestinationStationName() {
+		// TODO Auto-generated method stub
+		return this.DestinationStationName;
 	}
 	
 }

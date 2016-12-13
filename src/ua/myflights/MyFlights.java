@@ -17,7 +17,7 @@ public class MyFlights {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						mainView window = new mainView();
+						window = new mainView();
 						
 					} catch (Exception e) {
 						e.printStackTrace();

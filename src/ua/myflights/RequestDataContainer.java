@@ -1,4 +1,4 @@
-package ua.myflights;
+package ua.myflights;	
 
 import java.util.ArrayList;
 
@@ -10,8 +10,15 @@ import org.json.simple.parser.ParseException;
 public class RequestDataContainer {
 	
 	private JSONObject jsonObj;
-	private static JSONArray Legs;
+	private JSONArray Legs;
 	private JSONObject Leg;
+	
+	private JSONArray Itineraries;
+	private JSONObject Itinerary;
+	
+	private JSONArray Places; 
+	private JSONObject Place;
+	
 	private ArrayList<Flight> Flights;
 	
 	public RequestDataContainer(String json) throws ParseException{
@@ -19,8 +26,58 @@ public class RequestDataContainer {
 		Object obj = parser.parse(json);
 		jsonObj = (JSONObject) obj;	
 		Legs = (JSONArray) jsonObj.get("Legs");
-		setFlightInfoFromLegs(Legs);
+		Itineraries = (JSONArray) jsonObj.get("Itineraries");
+		Places = (JSONArray) jsonObj.get("Places");
+		
+		setFlightInfo(Legs, Itineraries);
+		//setFlightInfoFromItineraries("Itineraries");
 	}
+	
+	private void setFlightInfo(JSONArray Legs, JSONArray Itineraries){
+		Flights = new ArrayList<Flight>();
+		for (int i = 0; i<Legs.size();i++){
+			Flight f = new Flight();
+			
+			Leg = (JSONObject) Legs.get(i);
+			f.setId((String) Leg.get("Id"));
+			f.setOriginStationId(Leg.get("OriginStation").toString());
+			f.setDestinationStationId(Leg.get("DestinationStation").toString());
+			f.setOriginStationName(getPlaceTitle(Leg.get("OriginStation").toString()));
+			f.setDestinationStationName(getPlaceTitle(Leg.get("DestinationStation").toString()));
+			
+			f.setDuration((long) Leg.get("Duration"));	
+			f.setArrivalTime((String) Leg.get("Arrival"));
+			f.setDepartureTime((String) Leg.get("Departure"));
+			
+			Itinerary = (JSONObject) Itineraries.get(i);
+			JSONArray PricingOptions = (JSONArray) Itinerary.get("PricingOptions");
+			JSONObject PricingOption = (JSONObject) PricingOptions.get(0);
+			f.setPrice((double) PricingOption.get("Price"));
+			//System.out.println(getPlaceTitle(Leg.get("OriginStation").toString()));
+			Flights.add(f);
+		}
+	}
+	
+	
+	private String getPlaceTitle(String id){
+		String Name = null;
+		
+		for (int i = 0; i < Places.size(); i++){
+			Place = (JSONObject) Places.get(i);
+			if (Place.get("Id").toString().equals(id)){
+				Name = (String) Place.get("Name");
+				break;
+			}
+		}
+		return Name;
+		
+	}
+	
+	
+	public ArrayList<Flight> getFlights(){
+		return this.Flights;
+	}
+
 	
 	/*
 	public static void main(String[] args) throws ParseException {
@@ -29,27 +86,13 @@ public class RequestDataContainer {
 		
 		RequestDataContainer J = new RequestDataContainer(json);
 		
-		J.getFlightInfoFromLegs(Legs);
-	}*/
-	
-	
-	private void setFlightInfoFromLegs(JSONArray Legs){
-		Flights = new ArrayList<Flight>();
-		for (int i = 0; i<Legs.size();i++){
-			Leg = (JSONObject) Legs.get(i); 
-			Flight f = new Flight();
-			f.setId((String) Leg.get("Id"));
-			f.setOriginStationId(Leg.get("OriginStation").toString());
-			f.setDestinationStationId(Leg.get("DestinationStation").toString());
-			f.setDuration((long) Leg.get("Duration"));
-			f.setArrivalTime((String) Leg.get("Arrival"));
-			f.setDepartureTime((String) Leg.get("Departure"));			
-			Flights.add(f);
-		}
+		//J.getFlightInfoFromLegs(Legs);
 	}
-	
-	public ArrayList<Flight> getFlights(){
-		return this.Flights;
-	}
-	
+	*/
 }
+
+
+
+
+
+

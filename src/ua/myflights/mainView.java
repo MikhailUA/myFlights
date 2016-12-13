@@ -2,6 +2,7 @@ package ua.myflights;
 
 import java.awt.EventQueue;
 
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -11,6 +12,11 @@ import org.json.simple.parser.ParseException;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.JComboBox;
 
 public class mainView {
 
@@ -40,6 +47,8 @@ public class mainView {
 	private JTable myFlightsTable;
 	private static SearchResultsTableModel myFlightsTableModel = new SearchResultsTableModel();
 	
+	private static SearchBoxModel fromBoxModel = new SearchBoxModel();
+	
 
 	/**
 	 * Create the application.
@@ -49,6 +58,7 @@ public class mainView {
 	 */
 	public mainView() {
 		initialize();
+		
 	}
 
 	/**
@@ -142,13 +152,13 @@ public class mainView {
 		searchResultsTable = new JTable(searchResultsTableModel);
 		//searchResultsTable.setFillsViewportHeight(true);
 		JScrollPane SRcontainer = new JScrollPane(searchResultsTable);
-		SRcontainer.setBounds(49, 130, 390, 100);
+		SRcontainer.setBounds(49, 130, 548, 100);
 	
 		frmMyflights.getContentPane().add(SRcontainer);
 		
 		myFlightsTable = new JTable(myFlightsTableModel);
 		JScrollPane myFcontainer = new JScrollPane(myFlightsTable);
-		myFcontainer.setBounds(50, 299, 390, 100);
+		myFcontainer.setBounds(50, 299, 547, 100);
 		
 		frmMyflights.getContentPane().add(myFcontainer);
 		
@@ -159,10 +169,45 @@ public class mainView {
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.setBounds(50, 405, 117, 23);
 		frmMyflights.getContentPane().add(btnRefresh);
+		btnRefresh.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}
+			
+		});
+		
 		
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.setBounds(174, 405, 117, 23);
 		frmMyflights.getContentPane().add(btnDelete);
+		
+		JComboBox comboBox = new JComboBox(fromBoxModel);		
+		comboBox.setEditable(true);
+		comboBox.setBounds(470, 55, 97, 22);		
+		frmMyflights.getContentPane().add(comboBox);
+		
+		comboBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				String selected = comboBox.getSelectedItem().toString();
+				try {
+				    if (e.getStateChange() == ItemEvent.SELECTED) {
+				    	SearchController.searchPlaces(selected);
+			        }
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	
+			}
+		});
+		
 		
 		btnDelete.addActionListener(new ActionListener(){
 
@@ -177,9 +222,17 @@ public class mainView {
 		
 	}
 
-	public static void show(ArrayList<Flight> flights) {
+	public void show(ArrayList<Flight> flights) {
+		System.out.println("show");
 		searchResultsTableModel.addFlights(flights);
-	}		
+	}
+	
+	
+	public void updateSearchBox(ArrayList<Place> suggestedPlaces) {
+		fromBoxModel.addPlaces(suggestedPlaces);		
+	}
+
+	
 }
 
 
