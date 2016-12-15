@@ -23,6 +23,7 @@ public class RequestDataContainer {
 	
 	public RequestDataContainer(String json) throws ParseException{
 		JSONParser parser = new JSONParser();
+		System.out.println("2");
 		Object obj = parser.parse(json);
 		jsonObj = (JSONObject) obj;	
 		Legs = (JSONArray) jsonObj.get("Legs");

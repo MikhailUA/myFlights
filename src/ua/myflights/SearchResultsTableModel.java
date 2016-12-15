@@ -31,7 +31,6 @@ class SearchResultsTableModel extends AbstractTableModel{
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return flights.size();
 	}
 

@@ -8,20 +8,53 @@ import org.json.simple.parser.ParseException;
 public class SearchController {
 	
 	public static void searchFlights(String From, String To, String date) throws IOException, InterruptedException, ParseException{
-		ArrayList<Flight> flights = Request.getData(From, To, date);
-		/*System.out.println("size" + flights.size());
-		for (int i = 0; i< flights.size(); i++){
-			System.out.println(flights.get(i).getOriginStationName() + "," 
-					+ flights.get(i).getDestinationStationName() + ","
-					+ flights.get(i).getPrice() + ","
-					+ flights.get(i).getDuration() + ","
-					+ flights.get(i).getDepartureTime() + ","
-					+ flights.get(i).getArrivalTime() + ","
-					);
-		}
-		*/
+		/*Thread timer = new Thread(){
+			private boolean stopper = false;
+			public void run(){
+				while(true){
+					if (stopper == true){
+						break; 
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.print(".");
+				}
+			}
+			
+			public void setStop(){
+				stopper = true;
+			}
+		};*/
 		
-		MyFlights.window.show(flights);
+		Thread t = new Thread (){
+			public void run(){
+				ArrayList<Flight> flights = null;
+				try {
+				  flights = Request.getData(From, To, date);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					//timer.interrupt();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					//timer.interrupt();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					//timer.interrupt();
+				}
+				MyFlights.window.show(flights);
+			};
+		};
+		
+		t.start();
+	//	timer.start();
 	}
 	
 	public static void searchPlaces(String input) throws IOException, ParseException{

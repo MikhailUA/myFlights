@@ -10,6 +10,8 @@ import org.json.simple.parser.ParseException;
 public class MyFlights { 
 
 	static mainView window;
+	static loginView loginView;
+	private static User LoggedInUser;
 	
 	public static void main(String[] args) {
 		
@@ -18,7 +20,7 @@ public class MyFlights {
 				public void run() {
 					try {
 						window = new mainView();
-						
+		//				loginView = new loginView();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -26,6 +28,15 @@ public class MyFlights {
 			});
 			
 	}	
+	
+	public static void setLoggedInUser(User user){
+		LoggedInUser = user;
+	}
+	
+	public static User getLoggedInUser(){
+		return LoggedInUser;
+	}
+	
 }
 
 

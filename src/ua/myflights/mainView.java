@@ -1,5 +1,6 @@
 package ua.myflights;
 
+import java.awt.CardLayout;
 import java.awt.EventQueue;
 
 import javax.swing.Action;
@@ -25,6 +26,8 @@ import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 
 public class mainView {
 
@@ -48,7 +51,11 @@ public class mainView {
 	private static SearchResultsTableModel myFlightsTableModel = new SearchResultsTableModel();
 	
 	private static SearchBoxModel fromBoxModel = new SearchBoxModel();
-	
+	private JPanel mainPanel;
+	private JTextField loginField;
+	private JPasswordField passwordField;
+	private JButton btnLogout;
+	private JButton btnLogin;
 
 	/**
 	 * Create the application.
@@ -70,34 +77,48 @@ public class mainView {
 		frmMyflights.setBounds(100, 100, 633, 527);
 		frmMyflights.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMyflights.getContentPane().setLayout(null);
+		//frmMyflights.getContentPane().setLayout(new CardLayout(0,0));
+
 		frmMyflights.setVisible(true);
+		
+		JPanel mainPanel = new JPanel();
+		//JPanel loginPanel = new JPanel();
+		frmMyflights.getContentPane().add(mainPanel);	
+		//mainPanel.setLayout(null);
 		
 		placeTo = new JTextField();
 		placeTo.setBounds(146, 56, 86, 20);
 		frmMyflights.getContentPane().add(placeTo);
+		//mainPanel.add(placeTo);
 		placeTo.setColumns(10);
 		
 		placeFrom = new JTextField();
 		placeFrom .setBounds(50, 56, 86, 20);
 		frmMyflights.getContentPane().add(placeFrom );
+		//mainPanel.add(placeFrom );
 		placeFrom .setColumns(10);		
 		
 		dateFrom = new JTextField();
 		dateFrom.setBounds(50, 80, 86, 20);
 		frmMyflights.getContentPane().add(dateFrom);
+		//mainPanel.add(dateFrom);
 		dateFrom.setColumns(10);
 		
 		lblSearchResults = new JLabel("Search results:");
 		lblSearchResults.setBounds(49, 111, 86, 20);
 		frmMyflights.getContentPane().add(lblSearchResults);
+		//mainPanel.add(lblSearchResults);
+		
 		
 		lblCity = new JLabel("City");
 		lblCity.setBounds(15, 56, 25, 20);
 		frmMyflights.getContentPane().add(lblCity);
+		//mainPanel.add(lblCity);
 		
 		lblDate = new JLabel("Date");
 		lblDate.setBounds(15, 80, 30, 20);
 		frmMyflights.getContentPane().add(lblDate);
+		//mainPanel.add(lblDate);
 		
 		btnAddDestination = new JButton("Add Destination");
 		btnAddDestination.addActionListener(new ActionListener() {
@@ -110,10 +131,13 @@ public class mainView {
 		});
 		btnAddDestination.setBounds(50, 235, 117, 23);
 		frmMyflights.getContentPane().add(btnAddDestination);
+		//mainPanel.add(btnAddDestination);
 		
-		lblUsernameUser = new JLabel("Username: user");
-		lblUsernameUser.setBounds(511, 10, 104, 20);
+		lblUsernameUser = new JLabel("Logged out");
+		lblUsernameUser.setBounds(50, 11, 150, 20);
 		frmMyflights.getContentPane().add(lblUsernameUser);
+		//mainPanel.add(lblUsernameUser);
+		lblUsernameUser.setVisible(true);
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
@@ -137,14 +161,17 @@ public class mainView {
 		
 		btnSearch.setBounds(242, 55, 91, 23);
 		frmMyflights.getContentPane().add(btnSearch);
+		//mainPanel.add(btnSearch);
 		
 		lblTo = new JLabel("To:");
 		lblTo.setBounds(146, 33, 86, 20);
 		frmMyflights.getContentPane().add(lblTo);
+		//mainPanel.add(lblTo);
 		
 		lblFrom = new JLabel("From:");
 		lblFrom.setBounds(50, 33, 86, 20);
 		frmMyflights.getContentPane().add(lblFrom);
+		//mainPanel.add(lblFrom);
 		
 		list = new JList();
 		list.setBounds(50, 121, 390, 50);
@@ -153,40 +180,113 @@ public class mainView {
 		//searchResultsTable.setFillsViewportHeight(true);
 		JScrollPane SRcontainer = new JScrollPane(searchResultsTable);
 		SRcontainer.setBounds(49, 130, 548, 100);
-	
 		frmMyflights.getContentPane().add(SRcontainer);
+		//mainPanel.add(SRcontainer);
 		
 		myFlightsTable = new JTable(myFlightsTableModel);
 		JScrollPane myFcontainer = new JScrollPane(myFlightsTable);
 		myFcontainer.setBounds(50, 299, 547, 100);
-		
 		frmMyflights.getContentPane().add(myFcontainer);
+		//mainPanel.add(myFcontainer);
 		
 		JLabel lblMyDestinations = new JLabel("My Destinations:");
 		lblMyDestinations.setBounds(50, 281, 118, 14);
 		frmMyflights.getContentPane().add(lblMyDestinations);
+		//mainPanel.add(lblMyDestinations);
 		
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.setBounds(50, 405, 117, 23);
 		frmMyflights.getContentPane().add(btnRefresh);
+		//mainPanel.add(btnRefresh);
+		
 		btnRefresh.addActionListener(new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 			
 			}
-			
 		});
-		
 		
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.setBounds(174, 405, 117, 23);
 		frmMyflights.getContentPane().add(btnDelete);
+		//mainPanel.add(btnDelete);
+		btnDelete.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				myFlightsTableModel.deleteSelected(myFlightsTable.getSelectedRow());
+			}
+			
+		});
 		
 		JComboBox comboBox = new JComboBox(fromBoxModel);		
 		comboBox.setEditable(true);
-		comboBox.setBounds(470, 55, 97, 22);		
+		comboBox.setBounds(242, 79, 91, 22);		
 		frmMyflights.getContentPane().add(comboBox);
+		//mainPanel.add(comboBox);
+		
+		JLabel lblLogin = new JLabel("Login");
+		lblLogin.setBounds(424, 14, 59, 14);
+		frmMyflights.getContentPane().add(lblLogin);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(424, 36, 69, 17);
+		frmMyflights.getContentPane().add(lblPassword);
+		
+		loginField = new JTextField();
+		loginField.setBounds(493, 11, 86, 20);
+		frmMyflights.getContentPane().add(loginField);
+		loginField.setColumns(10);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(493, 33, 86, 20);
+		frmMyflights.getContentPane().add(passwordField);
+		
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setBounds(407, 55, 86, 23);
+		frmMyflights.getContentPane().add(btnLogin);
+		
+		btnLogin.addActionListener(new ActionListener(){
+			@SuppressWarnings("deprecation")
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					UserController.login(loginField.getText(), passwordField.getText());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		JButton btnRegister = new JButton("Register");
+		btnRegister.setBounds(493, 79, 86, 23);
+		frmMyflights.getContentPane().add(btnRegister);
+
+		btnRegister.addActionListener(new ActionListener(){
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				UserController.register(loginField.getText(), passwordField.getText());
+			}
+		});
+
+		btnLogout = new JButton("Logout");
+		btnLogout.setBounds(493, 55, 86, 23);
+		frmMyflights.getContentPane().add(btnLogout);
+		btnLogout.setVisible(true);
+		
+		btnLogout.addActionListener(new ActionListener(){
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				UserController.logout();
+			}
+		});
 		
 		comboBox.addItemListener(new ItemListener() {
 			
@@ -207,23 +307,9 @@ public class mainView {
 				}	
 			}
 		});
-		
-		
-		btnDelete.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				myFlightsTableModel.deleteSelected(myFlightsTable.getSelectedRow());
-			}
-			
-		});
-		
 	}
 
 	public void show(ArrayList<Flight> flights) {
-		System.out.println("show");
 		searchResultsTableModel.addFlights(flights);
 	}
 	
@@ -231,8 +317,20 @@ public class mainView {
 	public void updateSearchBox(ArrayList<Place> suggestedPlaces) {
 		fromBoxModel.addPlaces(suggestedPlaces);		
 	}
-
 	
+	public void showLoggedInUsername(String username){
+		lblUsernameUser.setVisible(true);
+		//btnLogout.setVisible(true);
+		//btnLogin.setVisible(false);
+		lblUsernameUser.setText("Logged in as: " + username);
+	}	
+	
+	public void hideLoggedInUsername(){
+	//	lblUsernameUser.setVisible(false);
+		lblUsernameUser.setText("Logged out");
+		//btnLogout.setVisible(false);
+		//btnLogin.setVisible(true);
+	}
 }
 
 
