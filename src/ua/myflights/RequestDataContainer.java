@@ -23,7 +23,6 @@ public class RequestDataContainer {
 	
 	public RequestDataContainer(String json) throws ParseException{
 		JSONParser parser = new JSONParser();
-		System.out.println("2");
 		Object obj = parser.parse(json);
 		jsonObj = (JSONObject) obj;	
 		Legs = (JSONArray) jsonObj.get("Legs");
@@ -40,11 +39,15 @@ public class RequestDataContainer {
 			Flight f = new Flight();
 			
 			Leg = (JSONObject) Legs.get(i);
-			f.setId((String) Leg.get("Id"));
+			f.setDistId((String) Leg.get("Id"));
 			f.setOriginStationId(Leg.get("OriginStation").toString());
 			f.setDestinationStationId(Leg.get("DestinationStation").toString());
+			
 			f.setOriginStationName(getPlaceTitle(Leg.get("OriginStation").toString()));
 			f.setDestinationStationName(getPlaceTitle(Leg.get("DestinationStation").toString()));
+
+			f.setOriginStationCode(getPlaceCode(Leg.get("OriginStation").toString()));
+			f.setDestinationStationCode(getPlaceCode(Leg.get("DestinationStation").toString()));
 			
 			f.setDuration((long) Leg.get("Duration"));	
 			f.setArrivalTime((String) Leg.get("Arrival"));
@@ -71,6 +74,21 @@ public class RequestDataContainer {
 			}
 		}
 		return Name;
+		
+	}
+	
+	private String getPlaceCode(String id){
+		String Code = null;
+		
+		for (int i = 0; i < Places.size(); i++){
+			Place = (JSONObject) Places.get(i);
+			if (Place.get("Id").toString().equals(id)){
+				Code = (String) Place.get("Code");
+				break;
+			}
+		}
+		return Code+"-sky";
+		
 		
 	}
 	

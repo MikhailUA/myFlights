@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 
 import javax.swing.Action;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -19,6 +21,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -56,6 +61,7 @@ public class mainView {
 	private JPasswordField passwordField;
 	private JButton btnLogout;
 	private JButton btnLogin;
+	private JProgressBar progressBar; 
 
 	/**
 	 * Create the application.
@@ -65,7 +71,6 @@ public class mainView {
 	 */
 	public mainView() {
 		initialize();
-		
 	}
 
 	/**
@@ -91,24 +96,32 @@ public class mainView {
 		frmMyflights.getContentPane().add(placeTo);
 		//mainPanel.add(placeTo);
 		placeTo.setColumns(10);
+		placeTo.setText("HRK-sky");
 		
 		placeFrom = new JTextField();
 		placeFrom .setBounds(50, 56, 86, 20);
 		frmMyflights.getContentPane().add(placeFrom );
 		//mainPanel.add(placeFrom );
-		placeFrom .setColumns(10);		
+		placeFrom .setColumns(10);
+		placeFrom.setText("KIEV-sky");
 		
 		dateFrom = new JTextField();
 		dateFrom.setBounds(50, 80, 86, 20);
 		frmMyflights.getContentPane().add(dateFrom);
 		//mainPanel.add(dateFrom);
 		dateFrom.setColumns(10);
+		dateFrom.setText("2016-12-25");
 		
 		lblSearchResults = new JLabel("Search results:");
-		lblSearchResults.setBounds(49, 111, 86, 20);
+		lblSearchResults.setBounds(49, 111, 118, 20);
 		frmMyflights.getContentPane().add(lblSearchResults);
 		//mainPanel.add(lblSearchResults);
 		
+		this.progressBar = new JProgressBar();
+		progressBar.setIndeterminate(true);
+		progressBar.setBounds(141, 116, 456, 10);
+		frmMyflights.getContentPane().add(progressBar);
+		progressBar.setVisible(false);
 		
 		lblCity = new JLabel("City");
 		lblCity.setBounds(15, 56, 25, 20);
@@ -122,14 +135,21 @@ public class mainView {
 		
 		btnAddDestination = new JButton("Add Destination");
 		btnAddDestination.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-				int[] a = new int[5];
-				a = searchResultsTable.getSelectedRows();
-				myFlightsTableModel.addFlight(searchResultsTableModel.getRowById(a[0]));
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				Date date = new Date(0);
+				if (MyFlights.getLoggedInUser() != null){
+					int[] a = new int[5];
+					a = searchResultsTable.getSelectedRows();
+					Flight fSelected = searchResultsTableModel.getRowById(a[0]);
+					myFlightsTableModel.addFlight(fSelected);
+					DestinationController.addDestionation(fSelected);
+				}else{
+					System.out.println("Please log in");
+				}
 			}
 		});
-		btnAddDestination.setBounds(50, 235, 117, 23);
+		btnAddDestination.setBounds(50, 235, 130, 23);
 		frmMyflights.getContentPane().add(btnAddDestination);
 		//mainPanel.add(btnAddDestination);
 		
@@ -216,7 +236,12 @@ public class mainView {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
+				int[] a = new int[5];
+				a = myFlightsTable.getSelectedRows();
+				Flight fSelected = myFlightsTableModel.getRowById(a[0]);
+				
 				myFlightsTableModel.deleteSelected(myFlightsTable.getSelectedRow());
+				DestinationController.deleteDestination(fSelected.getDistId());
 			}
 			
 		});
@@ -310,7 +335,22 @@ public class mainView {
 	}
 
 	public void show(ArrayList<Flight> flights) {
-		searchResultsTableModel.addFlights(flights);
+		if (flights == null){
+			JOptionPane.showMessageDialog(null, "Service Unavailable. Too many requests");
+		}else{
+			searchResultsTableModel.addFlights(flights);
+		}
+	}
+	
+	public void showMyDestinations(ArrayList<Flight> flights) {
+		if (flights != null){
+			myFlightsTableModel.addFlights(flights);
+		}
+	}
+	
+	public void clearTables(){
+		searchResultsTableModel.clear();
+		myFlightsTableModel.clear();
 	}
 	
 	
@@ -331,6 +371,15 @@ public class mainView {
 		//btnLogout.setVisible(false);
 		//btnLogin.setVisible(true);
 	}
+	
+	public void startProgressBar(){
+		this.progressBar.setVisible(true);
+	}
+	
+	public void stopProgressBar(){
+		this.progressBar.setVisible(false);
+	}
+	
 }
 
 

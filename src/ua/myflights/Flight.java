@@ -4,14 +4,16 @@ public class Flight {
 
 	private String OriginStationId;
 	private String OriginStationName;
+	private String OriginStationCode;
+	
 	private String DestinationStationId;
 	private String DestinationStationName;
+	private String DestinationStationCode;
 	
 	private String Date;
-	private double Price;
+	private double Price;	
 	
-	
-	private String Id;
+	private String DistId;
 	private long Duration;
 	private String ArrivalTime;
 	private String DepartureTime;
@@ -25,6 +27,15 @@ public class Flight {
 		this.Price = price;
 	} 
 	
+	public Flight(String DistId, String OriginStationName, String OriginStationCode, String DestinationStationName, String DestinationStationCode, double Price ) {
+		this.DistId = DistId;
+		this.OriginStationName = OriginStationName;
+		this.OriginStationCode = OriginStationCode;
+		this.DestinationStationName = DestinationStationName;
+		this.DestinationStationCode = DestinationStationCode;		
+		this.Price = Price;
+	}
+
 	public Flight() {
 		// TODO Auto-generated constructor stub
 	}
@@ -45,8 +56,8 @@ public class Flight {
 		this.Price = price;
 	}
 	
-	public void setId(String Id){
-		this.Id = Id;
+	public void setDistId(String Id){
+		this.DistId = Id;
 	}
 	
 	public String getOriginStationId(){
@@ -61,8 +72,8 @@ public class Flight {
 		return this.Price;
 	}
 
-	public String getId(){
-		return this.Id;
+	public String getDistId(){
+		return this.DistId;
 	}
 	
 	public String getArrivalTime() {
@@ -106,6 +117,26 @@ public class Flight {
 	public String getDestinationStationName() {
 		// TODO Auto-generated method stub
 		return this.DestinationStationName;
+	}
+	
+	public void save(){
+		
+	}
+
+	public String getOriginStationCode() {
+		return OriginStationCode;
+	}
+
+	public void setOriginStationCode(String originStationCode) {
+		OriginStationCode = originStationCode;
+	}
+
+	public String getDestinationStationCode() {
+		return DestinationStationCode;
+	}
+
+	public void setDestinationStationCode(String destinationStationCode) {
+		DestinationStationCode = destinationStationCode;
 	}
 	
 }

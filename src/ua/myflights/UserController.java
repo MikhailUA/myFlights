@@ -2,19 +2,16 @@ package ua.myflights;
 
 import java.awt.HeadlessException;
 import java.sql.*;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class UserController {
 
 	public static void register(String username, String password){
-		
 		User usr = getUserByUsername(username);
 		
-		if (usr.getUsername() != username){
-			JOptionPane.showMessageDialog(null, "User already exists", "Error", JOptionPane.ERROR_MESSAGE);
-		}else{
-			
+		if (usr.getUsername() == null){
 			Connection connection = MySqlConnection.dbConnect();
 			String Sql = "INSERT INTO user (username, password) VALUES ( ?, ?)";
 			
@@ -29,14 +26,15 @@ public class UserController {
 				JOptionPane.showMessageDialog(null, "Registered and Logged in");
 				login(username, password);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				e.printStackTrace();				
 			}
+		}else{
+			JOptionPane.showMessageDialog(null, "User already exists", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-//		JOptionPane.showMessageDialog(null, "User exists");
-//		MyFlights.window.showMainVWindow();		
 	}
 	
 	public static void login(String username, String password) throws SQLException{
+		ArrayList<Flight> flights = null;
 		Connection conn = MySqlConnection.dbConnect();
 		String Sql = "Select * from user where username=? and password=?";
 
@@ -49,8 +47,9 @@ public class UserController {
 			
 			if (rs.next()){
 				MyFlights.setLoggedInUser(getUser(rs.getInt("id")));
-				JOptionPane.showMessageDialog(null, "Logged in. Id: " + MyFlights.getLoggedInUser().getId());
 				MyFlights.window.showLoggedInUsername(username);
+				MyFlights.window.showMyDestinations(DestinationController.getDestinations(rs.getInt("id")));
+				JOptionPane.showMessageDialog(null, "Logged in. Id: " + MyFlights.getLoggedInUser().getId());
 			}else{
 				JOptionPane.showMessageDialog(null, "Invalid credetentials", "Error", JOptionPane.ERROR_MESSAGE);			
 			}
@@ -64,6 +63,7 @@ public class UserController {
 	public static void logout(){
 		MyFlights.setLoggedInUser(null);
 		MyFlights.window.hideLoggedInUsername();
+		MyFlights.window.clearTables();
 	}
 	
 	public static User getUser(int id){

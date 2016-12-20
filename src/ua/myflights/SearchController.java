@@ -8,7 +8,7 @@ import org.json.simple.parser.ParseException;
 public class SearchController {
 	
 	public static void searchFlights(String From, String To, String date) throws IOException, InterruptedException, ParseException{
-		/*Thread timer = new Thread(){
+		/*class MyTimer extends Thread{
 			private boolean stopper = false;
 			public void run(){
 				while(true){
@@ -28,33 +28,33 @@ public class SearchController {
 			public void setStop(){
 				stopper = true;
 			}
-		};*/
+		};
+		
+		MyTimer timer = new MyTimer();*/ 
 		
 		Thread t = new Thread (){
 			public void run(){
+				MyFlights.window.startProgressBar();
 				ArrayList<Flight> flights = null;
 				try {
 				  flights = Request.getData(From, To, date);
-					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					//timer.interrupt();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					//timer.interrupt();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					//timer.interrupt();
 				}
 				MyFlights.window.show(flights);
+				MyFlights.window.stopProgressBar();
 			};
 		};
 		
 		t.start();
-	//	timer.start();
+		//timer.start();
 	}
 	
 	public static void searchPlaces(String input) throws IOException, ParseException{
@@ -63,10 +63,13 @@ public class SearchController {
 		for (int i = 0; i< Places.size(); i++){
 			System.out.println(Places.get(i).getPlaceName() + ", " + Places.get(i).getPlaceId());
 		}
-		
 		//MyFlights.window.updateSearchBox(Places);
 	}
 	
+	
+	public static void badRequest(String code){
+		if (code == "429"){}
+	}
 }
 
 

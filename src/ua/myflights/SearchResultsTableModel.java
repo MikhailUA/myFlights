@@ -64,16 +64,21 @@ class SearchResultsTableModel extends AbstractTableModel{
 		return value;
 	}
 	
-	 public String getColumnName(int col) {
+	public String getColumnName(int col) {
         return columnNames[col].toString();
     }
  	
 	public Flight getRowById(int id){
 		return flights.get(id);
 	}
-	 
+	
 	public void deleteSelected(int id){
 		flights.remove(id);
+		fireTableDataChanged();
+	}
+	
+	public void clear(){
+		flights.clear();
 		fireTableDataChanged();
 	}
 	
