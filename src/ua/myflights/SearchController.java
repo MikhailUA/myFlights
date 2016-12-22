@@ -8,30 +8,7 @@ import org.json.simple.parser.ParseException;
 public class SearchController {
 	
 	public static void searchFlights(String From, String To, String date) throws IOException, InterruptedException, ParseException{
-		/*class MyTimer extends Thread{
-			private boolean stopper = false;
-			public void run(){
-				while(true){
-					if (stopper == true){
-						break; 
-					}
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					System.out.print(".");
-				}
-			}
-			
-			public void setStop(){
-				stopper = true;
-			}
-		};
-		
-		MyTimer timer = new MyTimer();*/ 
-		
+	
 		Thread t = new Thread (){
 			public void run(){
 				MyFlights.window.startProgressBar();
@@ -54,7 +31,7 @@ public class SearchController {
 		};
 		
 		t.start();
-		//timer.start();
+
 	}
 	
 	public static void searchPlaces(String input) throws IOException, ParseException{
@@ -73,10 +50,32 @@ public class SearchController {
 }
 
 
+/*class MyTimer extends Thread{
+private boolean stopper = false;
+public void run(){
+	while(true){
+		if (stopper == true){
+			break; 
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.print(".");
+	}
+}
+
+public void setStop(){
+	stopper = true;
+}
+};
+
+MyTimer timer = new MyTimer();*/ 
 
 
-
-
+//timer.start();
 
 
 

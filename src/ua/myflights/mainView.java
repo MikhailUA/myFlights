@@ -241,7 +241,7 @@ public class mainView {
 				Flight fSelected = myFlightsTableModel.getRowById(a[0]);
 				
 				myFlightsTableModel.deleteSelected(myFlightsTable.getSelectedRow());
-				DestinationController.deleteDestination(fSelected.getDistId());
+				DestinationController.deleteDestination(fSelected.getDistId(), MyFlights.getLoggedInUser().getId());
 			}
 			
 		});
@@ -360,16 +360,11 @@ public class mainView {
 	
 	public void showLoggedInUsername(String username){
 		lblUsernameUser.setVisible(true);
-		//btnLogout.setVisible(true);
-		//btnLogin.setVisible(false);
 		lblUsernameUser.setText("Logged in as: " + username);
 	}	
 	
 	public void hideLoggedInUsername(){
-	//	lblUsernameUser.setVisible(false);
 		lblUsernameUser.setText("Logged out");
-		//btnLogout.setVisible(false);
-		//btnLogin.setVisible(true);
 	}
 	
 	public void startProgressBar(){

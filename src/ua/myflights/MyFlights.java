@@ -10,7 +10,6 @@ import org.json.simple.parser.ParseException;
 public class MyFlights { 
 
 	static mainView window;
-	static loginView loginView;
 	private static User LoggedInUser;
 	
 	public static void main(String[] args) {

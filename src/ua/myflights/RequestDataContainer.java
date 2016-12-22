@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class RequestDataContainer {
+public class RequestDataContainer { // обработка json
 	
 	private JSONObject jsonObj;
 	private JSONArray Legs;
@@ -73,8 +73,7 @@ public class RequestDataContainer {
 				break;
 			}
 		}
-		return Name;
-		
+		return Name;		
 	}
 	
 	private String getPlaceCode(String id){
@@ -87,9 +86,7 @@ public class RequestDataContainer {
 				break;
 			}
 		}
-		return Code+"-sky";
-		
-		
+		return Code+"-sky";		
 	}
 	
 	

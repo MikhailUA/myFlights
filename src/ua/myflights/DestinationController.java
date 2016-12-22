@@ -13,7 +13,9 @@ public class DestinationController {
 	
 	public static void addDestionation(Flight f){
 		Connection conn = MySqlConnection.dbConnect();
-		String Sql = "INSERT INTO destination (distId, userId, originStation, destinationStation, originStationCode, destinationStationCode, price, duration, arrival, departure) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String Sql = "INSERT INTO destination "
+				+ "(distId, userId, originStation, destinationStation, originStationCode, destinationStationCode, price, duration, arrival, departure) "
+				+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			if(!conn.isClosed()){			
@@ -41,14 +43,15 @@ public class DestinationController {
 		}
 	}
 	
-	public static void deleteDestination(String distId){
+	public static void deleteDestination(String distId, int userId){
 		Connection conn = MySqlConnection.dbConnect();
-		String Sql = "DELETE from destination WHERE distId=?";
+		String Sql = "DELETE from destination WHERE distId=? and userId=?";
 
 		try {
 			if(!conn.isClosed()){			
 				PreparedStatement pst = conn.prepareStatement(Sql);
 				pst.setString(1, distId);
+				pst.setInt(2, userId);
 				pst.execute();				
 			}
 		} catch (HeadlessException e) {
@@ -59,10 +62,6 @@ public class DestinationController {
 			e.printStackTrace();
 		}
 	} 
-	
-	public static void refreshDestination(String distId){
-		
-	}
 	
 	public static ArrayList<Flight> getDestinations(int userId) throws HeadlessException, SQLException{
 		ArrayList<Flight> flights = new ArrayList<Flight>();
@@ -99,6 +98,10 @@ public class DestinationController {
 		
 		conn.close();
 		return flights;
+	}
+	
+	public static void refreshDestination(String distId){
+		
 	}
 	
 }
