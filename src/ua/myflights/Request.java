@@ -114,8 +114,6 @@ public class Request {
 		
 		c2.disconnect();
 
-		//MyFlights.spentTime.stopTimer();
-		
 		return response.toString();		
 	}	
 

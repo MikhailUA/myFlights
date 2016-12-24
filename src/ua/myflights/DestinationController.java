@@ -107,31 +107,40 @@ public class DestinationController {
 		return flights;
 	}
 	
-	public static void refreshDestinations(int userId) throws HeadlessException, SQLException, ParseException, IOException, InterruptedException, org.json.simple.parser.ParseException{
-		ArrayList<Flight> flightsDB = new ArrayList<Flight>(); 
-		ArrayList<Flight> flights = new ArrayList<Flight>(); 
-		flightsDB = getDestinations(userId);
-		for (int i = 0; i < flightsDB.size(); i++){
-			Flight f = flightsDB.get(i);
-			SimpleDateFormat inputformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-			SimpleDateFormat outputformat = new SimpleDateFormat("yyyy-MM-dd");
-			Date DepartureDate = inputformat.parse(f.getDepartureTime());
-			if (f.getUpdatedAt() == null || !f.getUpdatedAt().equals(MyFlights.getCurrentDate())){
-				
-				flights = Request.getData(f.getOriginStationCode(), f.getDestinationStationCode(), outputformat.format(DepartureDate).toString());
-				if (flights == null){return;}
-				for (int j = 0; j < flights.size(); j++){
-					if (f.getDepartureTime().equals(flights.get(j).getDepartureTime())){
-						updateDestination(f.getDBid(), flights.get(j).getPrice());
-						flights.clear();
-						break;
-					}
-				}
-			}
-		}
+	public static void refreshDestinations(int userId){
 		
-
-		MyFlights.window.showMyDestinations(getDestinations(userId));
+		Thread t = new Thread(){
+			public void run(){
+				ArrayList<Flight> flightsDB = new ArrayList<Flight>(); 
+				ArrayList<Flight> flights = new ArrayList<Flight>();
+				try{
+					flightsDB = getDestinations(userId);
+					for (int i = 0; i < flightsDB.size(); i++){
+						Flight f = flightsDB.get(i);
+						SimpleDateFormat inputformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+						SimpleDateFormat outputformat = new SimpleDateFormat("yyyy-MM-dd");
+						Date DepartureDate = inputformat.parse(f.getDepartureTime());
+						if (f.getUpdatedAt() == null || !f.getUpdatedAt().equals(MyFlights.getCurrentDate())){
+							
+							flights = Request.getData(f.getOriginStationCode(), f.getDestinationStationCode(), outputformat.format(DepartureDate).toString());
+							if (flights == null){return;}
+							for (int j = 0; j < flights.size(); j++){
+								if (f.getDepartureTime().equals(flights.get(j).getDepartureTime())){
+									updateDestination(f.getDBid(), flights.get(j).getPrice());
+									flights.clear();
+									break;
+								}
+							}
+						}
+					}
+					MyFlights.window.showMyDestinations(getDestinations(userId));				
+				}catch (Exception e){
+					
+				}
+			}			
+		};
+		
+		t.start();
 	}
 	
 	

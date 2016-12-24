@@ -221,30 +221,11 @@ public class mainView {
 		//mainPanel.add(btnRefresh);
 		
 		btnRefresh.addActionListener(new ActionListener(){
+		
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					DestinationController.refreshDestinations(MyFlights.getLoggedInUser().getId());
-				} catch (HeadlessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (java.text.ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				DestinationController.refreshDestinations(MyFlights.getLoggedInUser().getId());
 				}
-			}
 		});
 		
 		JButton btnDelete = new JButton("Delete");
