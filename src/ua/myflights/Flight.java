@@ -10,22 +10,17 @@ public class Flight {
 	private String DestinationStationName;
 	private String DestinationStationCode;
 	
-	private String Date;
+	private String createdAt;
+	private String updatedAt;
 	private double Price;	
+	private double PriceUpdated;
 	
+	private int DBid;
 	private String DistId;
 	private long Duration;
 	private String ArrivalTime;
 	private String DepartureTime;
-	
-	
-	
-	public Flight(String originPlace, String destination, String date, double price){
-		this.OriginStationId = originPlace;
-		this.DestinationStationId = destination;
-		this.Date = date;
-		this.Price = price;
-	} 
+	 
 	
 	public Flight(String DistId, String OriginStationName, String OriginStationCode, String DestinationStationName, String DestinationStationCode, double Price ) {
 		this.DistId = DistId;
@@ -46,10 +41,6 @@ public class Flight {
 	
 	public void setDestinationStationId(String place){
 		this.DestinationStationId = place;
-	}
-	
-	public void setDate(String date){
-		this.Date = date;
 	}
 	
 	public void setPrice(double price){
@@ -137,6 +128,38 @@ public class Flight {
 
 	public void setDestinationStationCode(String destinationStationCode) {
 		DestinationStationCode = destinationStationCode;
+	}
+
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public String getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public double getPriceUpdated() {
+		return PriceUpdated;
+	}
+
+	public void setPriceUpdated(double priceUpdated) {
+		PriceUpdated = priceUpdated;
+	}
+
+	public int getDBid() {
+		return DBid;
+	}
+
+	public void setDBid(int dBid) {
+		DBid = dBid;
 	}
 	
 }

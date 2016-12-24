@@ -66,7 +66,7 @@ public class UserController {
 		MyFlights.window.clearTables();
 	}
 	
-	public static User getUser(int id){
+	public static User getUser(int id) throws SQLException{
 		User usr = new User();
 		
 		Connection conn = MySqlConnection.dbConnect();

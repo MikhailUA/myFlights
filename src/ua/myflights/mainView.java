@@ -2,6 +2,7 @@ package ua.myflights;
 
 import java.awt.CardLayout;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 
 import javax.swing.Action;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ public class mainView {
 	private static SearchResultsTableModel searchResultsTableModel = new SearchResultsTableModel();
 	
 	private JTable myFlightsTable;
-	private static SearchResultsTableModel myFlightsTableModel = new SearchResultsTableModel();
+	private static DestinationsModel myFlightsTableModel = new DestinationsModel();
 	
 	private static SearchBoxModel fromBoxModel = new SearchBoxModel();
 	private JPanel mainPanel;
@@ -163,7 +165,6 @@ public class mainView {
 		btnSearch.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-
 				try {
 					SearchController.searchFlights(placeFrom.getText(), placeTo.getText(), dateFrom.getText());
 				} catch (IOException e) {
@@ -222,7 +223,27 @@ public class mainView {
 		btnRefresh.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			
+				try {
+					DestinationController.refreshDestinations(MyFlights.getLoggedInUser().getId());
+				} catch (HeadlessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (java.text.ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -260,12 +281,12 @@ public class mainView {
 		lblPassword.setBounds(424, 36, 69, 17);
 		frmMyflights.getContentPane().add(lblPassword);
 		
-		loginField = new JTextField();
+		loginField = new JTextField("admin");
 		loginField.setBounds(493, 11, 86, 20);
 		frmMyflights.getContentPane().add(loginField);
 		loginField.setColumns(10);
 		
-		passwordField = new JPasswordField();
+		passwordField = new JPasswordField("pass");
 		passwordField.setBounds(493, 33, 86, 20);
 		frmMyflights.getContentPane().add(passwordField);
 		
@@ -373,6 +394,11 @@ public class mainView {
 	
 	public void stopProgressBar(){
 		this.progressBar.setVisible(false);
+	}
+	
+	public void refreshDestinationTable(){
+		System.out.println("ref mainView method");
+		myFlightsTableModel.refresh();
 	}
 	
 }

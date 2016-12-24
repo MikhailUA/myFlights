@@ -36,9 +36,11 @@ public class Request {
 		
 		String response;
 		
+		System.out.println("start API Request");
 		response = ApiRequest(url,requestParams);
+		System.out.println("finish API Request");
 		
-		if (response == "429"){
+		if (response.equals("429")){
 			return null;
 		}
 		
@@ -51,7 +53,7 @@ public class Request {
 	
 	public static String ApiRequest (String urlString, Map<Object, Object> nameValuePairs) 
 			throws IOException, InterruptedException{
-		
+
 		//Request for Session-----------------------------------------------------
 		URL url = new URL(urlString);
 		HttpURLConnection c1 = (HttpURLConnection) url.openConnection();

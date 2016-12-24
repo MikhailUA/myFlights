@@ -1,11 +1,15 @@
 package ua.myflights;
 
 import java.awt.HeadlessException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -14,8 +18,8 @@ public class DestinationController {
 	public static void addDestionation(Flight f){
 		Connection conn = MySqlConnection.dbConnect();
 		String Sql = "INSERT INTO destination "
-				+ "(distId, userId, originStation, destinationStation, originStationCode, destinationStationCode, price, duration, arrival, departure) "
-				+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "(distId, userId, originStation, destinationStation, originStationCode, destinationStationCode, price, duration, arrival, departure,createdAt) "
+				+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			if(!conn.isClosed()){			
@@ -30,6 +34,7 @@ public class DestinationController {
 				pst.setInt(8, (int) f.getDuration());
 				pst.setString(9, f.getArrivalTime());
 				pst.setString(10, f.getDepartureTime());
+				pst.setString(11, MyFlights.getCurrentDate());
 				
 				pst.execute();
 				
@@ -76,6 +81,7 @@ public class DestinationController {
 			
 			while (rs.next()){
 				Flight f = new Flight();
+				f.setDBid(rs.getInt("id"));
 				f.setDistId(rs.getString("distId"));
 				f.setOriginStationName(rs.getString("originStation"));
 				f.setOriginStationCode(rs.getString("originStationCode"));
@@ -84,6 +90,7 @@ public class DestinationController {
 				f.setDestinationStationCode(rs.getString("destinationStationCode"));
 
 				f.setPrice(rs.getDouble("price"));
+				f.setPriceUpdated(rs.getDouble("priceUpdated"));
 				
 				f.setDuration(rs.getLong("duration"));
 				f.setArrivalTime(rs.getString("arrival"));
@@ -100,7 +107,48 @@ public class DestinationController {
 		return flights;
 	}
 	
-	public static void refreshDestination(String distId){
+	public static void refreshDestinations(int userId) throws HeadlessException, SQLException, ParseException, IOException, InterruptedException, org.json.simple.parser.ParseException{
+		ArrayList<Flight> flightsDB = new ArrayList<Flight>(); 
+		ArrayList<Flight> flights = new ArrayList<Flight>(); 
+		flightsDB = getDestinations(userId);
+		for (int i = 0; i < flightsDB.size(); i++){
+			Flight f = flightsDB.get(i);
+			SimpleDateFormat inputformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			SimpleDateFormat outputformat = new SimpleDateFormat("yyyy-MM-dd");
+			Date DepartureDate = inputformat.parse(f.getDepartureTime());
+			if (f.getUpdatedAt() == null || !f.getUpdatedAt().equals(MyFlights.getCurrentDate())){
+				
+				flights = Request.getData(f.getOriginStationCode(), f.getDestinationStationCode(), outputformat.format(DepartureDate).toString());
+				if (flights == null){return;}
+				for (int j = 0; j < flights.size(); j++){
+					if (f.getDepartureTime().equals(flights.get(j).getDepartureTime())){
+						updateDestination(f.getDBid(), flights.get(j).getPrice());
+						flights.clear();
+						break;
+					}
+				}
+			}
+		}
+		
+
+		MyFlights.window.showMyDestinations(getDestinations(userId));
+	}
+	
+	
+	public static void updateDestination( int DBid, double priceUpdated) throws SQLException{
+		Connection conn = MySqlConnection.dbConnect();
+		String Sql = "UPDATE `destination` SET `priceUpdated`= ?,`updatedAt`= ? WHERE `id`= ?";
+		
+		if(!conn.isClosed()){
+			
+			PreparedStatement pst = conn.prepareStatement(Sql);
+			pst.setDouble(1, priceUpdated);
+			pst.setString(2, MyFlights.getCurrentDate());
+			pst.setInt(3, DBid);
+			pst.execute();
+		}
+		
+		conn.close();
 		
 	}
 	

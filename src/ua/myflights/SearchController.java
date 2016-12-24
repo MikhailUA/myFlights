@@ -34,6 +34,7 @@ public class SearchController {
 
 	}
 	
+
 	public static void searchPlaces(String input) throws IOException, ParseException{
 		ArrayList<Place> Places = Request.getPlaces(input) ;
 		
@@ -47,7 +48,11 @@ public class SearchController {
 	public static void badRequest(String code){
 		if (code == "429"){}
 	}
+		
 }
+
+
+
 
 
 /*class MyTimer extends Thread{

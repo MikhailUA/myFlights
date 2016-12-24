@@ -2,6 +2,8 @@ package ua.myflights;
 
 import java.awt.EventQueue;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import org.json.simple.parser.ParseException;
@@ -34,6 +36,12 @@ public class MyFlights {
 	
 	public static User getLoggedInUser(){
 		return LoggedInUser;
+	}
+	
+	public static String getCurrentDate(){
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localDate = LocalDate.now();
+		return dtf.format(localDate); //2016-11-16
 	}
 	
 }
