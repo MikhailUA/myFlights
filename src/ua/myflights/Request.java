@@ -87,16 +87,21 @@ public class Request {
 		c1.disconnect();
 		
 		//Request for info--------------------------------------------------------
-		Location = Location + "?apiKey=prtl6749387986743898559646983194"; 
+		Location = Location + "?apiKey="+apiKey; 
 		URL urlforResult = new URL (Location);
-		Thread.sleep(6000);
-		HttpURLConnection c2 = (HttpURLConnection) urlforResult.openConnection();
-		c2.setRequestProperty("Accept", "application/json");
 		
-		if (c2.getResponseCode() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "+ c2.getResponseCode());
-		}
-		 
+		int code;
+		HttpURLConnection c2;
+		
+		do{
+			c2 = (HttpURLConnection) urlforResult.openConnection();
+			c2.setRequestProperty("Accept", "application/json");
+			code = c2.getResponseCode();
+			System.out.println(code);
+			if (code == 304){Thread.sleep(1000);}
+		}while(code != 200);
+		
+
 		StringBuilder response = new StringBuilder();
 		try( Scanner in = new Scanner(c2.getInputStream())){
 			while (in.hasNextLine()){
@@ -108,6 +113,7 @@ public class Request {
 		}
 		
 		c2.disconnect();
+
 		//MyFlights.spentTime.stopTimer();
 		
 		return response.toString();		
