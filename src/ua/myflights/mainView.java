@@ -114,6 +114,27 @@ public class mainView {
 		dateFrom.setColumns(10);
 		dateFrom.setText("2016-12-25");
 		
+		lblCity = new JLabel("City");
+		lblCity.setBounds(15, 56, 25, 20);
+		frmMyflights.getContentPane().add(lblCity);
+		//mainPanel.add(lblCity);
+		
+		lblDate = new JLabel("Date");
+		lblDate.setBounds(15, 80, 30, 20);
+		frmMyflights.getContentPane().add(lblDate);
+		//mainPanel.add(lblDate);		
+		
+		lblTo = new JLabel("To:");
+		lblTo.setBounds(146, 33, 86, 20);
+		frmMyflights.getContentPane().add(lblTo);
+		//mainPanel.add(lblTo);
+		
+		lblFrom = new JLabel("From:");
+		lblFrom.setBounds(50, 33, 86, 20);
+		frmMyflights.getContentPane().add(lblFrom);
+		//mainPanel.add(lblFrom);
+		
+//-----------------------------------------------------------------------------------------------		
 		lblSearchResults = new JLabel("Search results:");
 		lblSearchResults.setBounds(49, 111, 118, 20);
 		frmMyflights.getContentPane().add(lblSearchResults);
@@ -124,18 +145,12 @@ public class mainView {
 		progressBar.setBounds(141, 116, 456, 10);
 		frmMyflights.getContentPane().add(progressBar);
 		progressBar.setVisible(false);
-		
-		lblCity = new JLabel("City");
-		lblCity.setBounds(15, 56, 25, 20);
-		frmMyflights.getContentPane().add(lblCity);
-		//mainPanel.add(lblCity);
-		
-		lblDate = new JLabel("Date");
-		lblDate.setBounds(15, 80, 30, 20);
-		frmMyflights.getContentPane().add(lblDate);
-		//mainPanel.add(lblDate);
-		
+				
 		btnAddDestination = new JButton("Add Destination");
+		
+		btnAddDestination.setBounds(50, 235, 130, 23);
+		frmMyflights.getContentPane().add(btnAddDestination);
+		
 		btnAddDestination.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -151,74 +166,49 @@ public class mainView {
 				}
 			}
 		});
-		btnAddDestination.setBounds(50, 235, 130, 23);
-		frmMyflights.getContentPane().add(btnAddDestination);
-		//mainPanel.add(btnAddDestination);
 		
-		lblUsernameUser = new JLabel("Logged out");
-		lblUsernameUser.setBounds(50, 11, 150, 20);
-		frmMyflights.getContentPane().add(lblUsernameUser);
-		//mainPanel.add(lblUsernameUser);
-		lblUsernameUser.setVisible(true);
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					SearchController.searchFlights(placeFrom.getText(), placeTo.getText(), dateFrom.getText());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+					try {
+						SearchController.searchFlights(placeFrom.getText(), placeTo.getText(), dateFrom.getText());
+					} catch (IOException | InterruptedException
+							| ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 			}
 		});
 		
 		btnSearch.setBounds(242, 55, 91, 23);
 		frmMyflights.getContentPane().add(btnSearch);
 		//mainPanel.add(btnSearch);
-		
-		lblTo = new JLabel("To:");
-		lblTo.setBounds(146, 33, 86, 20);
-		frmMyflights.getContentPane().add(lblTo);
-		//mainPanel.add(lblTo);
-		
-		lblFrom = new JLabel("From:");
-		lblFrom.setBounds(50, 33, 86, 20);
-		frmMyflights.getContentPane().add(lblFrom);
-		//mainPanel.add(lblFrom);
-		
-		list = new JList();
-		list.setBounds(50, 121, 390, 50);
+				
+/*		list = new JList();
+		list.setBounds(50, 121, 390, 50);*/
 
 		searchResultsTable = new JTable(searchResultsTableModel);
-		//searchResultsTable.setFillsViewportHeight(true);
 		JScrollPane SRcontainer = new JScrollPane(searchResultsTable);
 		SRcontainer.setBounds(49, 130, 548, 100);
 		frmMyflights.getContentPane().add(SRcontainer);
-		//mainPanel.add(SRcontainer);
 		
 		myFlightsTable = new JTable(myFlightsTableModel);
 		JScrollPane myFcontainer = new JScrollPane(myFlightsTable);
 		myFcontainer.setBounds(50, 299, 547, 100);
 		frmMyflights.getContentPane().add(myFcontainer);
-		//mainPanel.add(myFcontainer);
 		
 		JLabel lblMyDestinations = new JLabel("My Destinations:");
 		lblMyDestinations.setBounds(50, 281, 118, 14);
 		frmMyflights.getContentPane().add(lblMyDestinations);
-		//mainPanel.add(lblMyDestinations);
 		
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.setBounds(50, 405, 117, 23);
 		frmMyflights.getContentPane().add(btnRefresh);
-		//mainPanel.add(btnRefresh);
+
 		
 		btnRefresh.addActionListener(new ActionListener(){
 		
@@ -254,6 +244,9 @@ public class mainView {
 		frmMyflights.getContentPane().add(comboBox);
 		//mainPanel.add(comboBox);
 		
+		
+//-----------------------------------------------------------------------------------------------------		
+		
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setBounds(424, 14, 59, 14);
 		frmMyflights.getContentPane().add(lblLogin);
@@ -274,6 +267,11 @@ public class mainView {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(407, 55, 86, 23);
 		frmMyflights.getContentPane().add(btnLogin);
+		
+		lblUsernameUser = new JLabel("Logged out");
+		lblUsernameUser.setBounds(50, 11, 150, 20);
+		frmMyflights.getContentPane().add(lblUsernameUser);
+		lblUsernameUser.setVisible(true);		
 		
 		btnLogin.addActionListener(new ActionListener(){
 			@SuppressWarnings("deprecation")
@@ -314,6 +312,8 @@ public class mainView {
 				UserController.logout();
 			}
 		});
+
+//-----------------------------------------------------------------------------------------------------		
 		
 		comboBox.addItemListener(new ItemListener() {
 			
