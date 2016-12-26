@@ -1,10 +1,5 @@
 package ua.myflights;
 
-import java.awt.CardLayout;
-import java.awt.EventQueue;
-import java.awt.HeadlessException;
-
-import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
@@ -18,12 +13,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +22,6 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -88,11 +78,6 @@ public class mainView {
 
 		frmMyflights.setVisible(true);
 		
-		JPanel mainPanel = new JPanel();
-		//JPanel loginPanel = new JPanel();
-		frmMyflights.getContentPane().add(mainPanel);	
-		//mainPanel.setLayout(null);
-		
 		placeTo = new JTextField();
 		placeTo.setBounds(146, 56, 86, 20);
 		frmMyflights.getContentPane().add(placeTo);
@@ -112,16 +97,16 @@ public class mainView {
 		frmMyflights.getContentPane().add(dateFrom);
 		//mainPanel.add(dateFrom);
 		dateFrom.setColumns(10);
-		dateFrom.setText("2016-12-25");
+		dateFrom.setText("2016-12-27");
 		
 		lblSearchResults = new JLabel("Search results:");
-		lblSearchResults.setBounds(49, 111, 118, 20);
+		lblSearchResults.setBounds(50, 123, 118, 20);
 		frmMyflights.getContentPane().add(lblSearchResults);
 		//mainPanel.add(lblSearchResults);
 		
 		this.progressBar = new JProgressBar();
 		progressBar.setIndeterminate(true);
-		progressBar.setBounds(141, 116, 456, 10);
+		progressBar.setBounds(142, 128, 456, 10);
 		frmMyflights.getContentPane().add(progressBar);
 		progressBar.setVisible(false);
 		
@@ -151,12 +136,12 @@ public class mainView {
 				}
 			}
 		});
-		btnAddDestination.setBounds(50, 235, 130, 23);
+		btnAddDestination.setBounds(51, 247, 130, 23);
 		frmMyflights.getContentPane().add(btnAddDestination);
 		//mainPanel.add(btnAddDestination);
 		
 		lblUsernameUser = new JLabel("Logged out");
-		lblUsernameUser.setBounds(50, 11, 150, 20);
+		lblUsernameUser.setBounds(428, 5, 150, 20);
 		frmMyflights.getContentPane().add(lblUsernameUser);
 		//mainPanel.add(lblUsernameUser);
 		lblUsernameUser.setVisible(true);
@@ -180,7 +165,7 @@ public class mainView {
 			}
 		});
 		
-		btnSearch.setBounds(242, 55, 91, 23);
+		btnSearch.setBounds(146, 79, 86, 23);
 		frmMyflights.getContentPane().add(btnSearch);
 		//mainPanel.add(btnSearch);
 		
@@ -200,7 +185,7 @@ public class mainView {
 		searchResultsTable = new JTable(searchResultsTableModel);
 		//searchResultsTable.setFillsViewportHeight(true);
 		JScrollPane SRcontainer = new JScrollPane(searchResultsTable);
-		SRcontainer.setBounds(49, 130, 548, 100);
+		SRcontainer.setBounds(50, 142, 548, 100);
 		frmMyflights.getContentPane().add(SRcontainer);
 		//mainPanel.add(SRcontainer);
 		
@@ -252,27 +237,28 @@ public class mainView {
 		comboBox.setEditable(true);
 		comboBox.setBounds(242, 79, 91, 22);		
 		frmMyflights.getContentPane().add(comboBox);
+		comboBox.setVisible(false);
 		//mainPanel.add(comboBox);
 		
 		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setBounds(424, 14, 59, 14);
+		lblLogin.setBounds(428, 36, 59, 14);
 		frmMyflights.getContentPane().add(lblLogin);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(424, 36, 69, 17);
+		lblPassword.setBounds(428, 58, 69, 17);
 		frmMyflights.getContentPane().add(lblPassword);
 		
 		loginField = new JTextField("admin");
-		loginField.setBounds(493, 11, 86, 20);
+		loginField.setBounds(497, 33, 86, 20);
 		frmMyflights.getContentPane().add(loginField);
 		loginField.setColumns(10);
 		
 		passwordField = new JPasswordField("pass");
-		passwordField.setBounds(493, 33, 86, 20);
+		passwordField.setBounds(497, 55, 86, 20);
 		frmMyflights.getContentPane().add(passwordField);
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(407, 55, 86, 23);
+		btnLogin.setBounds(411, 77, 86, 23);
 		frmMyflights.getContentPane().add(btnLogin);
 		
 		btnLogin.addActionListener(new ActionListener(){
@@ -289,7 +275,7 @@ public class mainView {
 		});
 		
 		JButton btnRegister = new JButton("Register");
-		btnRegister.setBounds(493, 79, 86, 23);
+		btnRegister.setBounds(497, 101, 86, 23);
 		frmMyflights.getContentPane().add(btnRegister);
 
 		btnRegister.addActionListener(new ActionListener(){
@@ -302,8 +288,12 @@ public class mainView {
 		});
 
 		btnLogout = new JButton("Logout");
-		btnLogout.setBounds(493, 55, 86, 23);
+		btnLogout.setBounds(497, 77, 86, 23);
 		frmMyflights.getContentPane().add(btnLogout);
+		
+		JLabel lblSearchForm = new JLabel("Search form:");
+		lblSearchForm.setBounds(50, 11, 84, 14);
+		frmMyflights.getContentPane().add(lblSearchForm);
 		btnLogout.setVisible(true);
 		
 		btnLogout.addActionListener(new ActionListener(){
@@ -381,7 +371,6 @@ public class mainView {
 		System.out.println("ref mainView method");
 		myFlightsTableModel.refresh();
 	}
-	
 }
 
 
