@@ -13,18 +13,14 @@ public class SearchController {
 			public void run(){
 				MyFlights.window.startProgressBar();
 				ArrayList<Flight> flights = null;
-				try {
-				  flights = Request.getData(From, To, date);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
+
+				  try {
+					flights = Request.getData(From, To, date);
+				} catch (IOException | InterruptedException | ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
 				MyFlights.window.show(flights);
 				MyFlights.window.stopProgressBar();
 			};
@@ -41,14 +37,8 @@ public class SearchController {
 		for (int i = 0; i< Places.size(); i++){
 			System.out.println(Places.get(i).getPlaceName() + ", " + Places.get(i).getPlaceId());
 		}
-		//MyFlights.window.updateSearchBox(Places);
 	}
 	
-	
-	public static void badRequest(String code){
-		if (code == "429"){}
-	}
-		
 }
 
 

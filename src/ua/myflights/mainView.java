@@ -145,7 +145,7 @@ public class mainView {
 					a = searchResultsTable.getSelectedRows();
 					Flight fSelected = searchResultsTableModel.getRowById(a[0]);
 					myFlightsTableModel.addFlight(fSelected);
-					DestinationController.addDestionation(fSelected);
+					DestinationController.addDestination(fSelected);
 				}else{
 					System.out.println("Please log in");
 				}

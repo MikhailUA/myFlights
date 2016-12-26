@@ -37,7 +37,7 @@ public class Request {
 		String response;
 		
 		System.out.println("start API Request");
-		response = ApiRequest(url,requestParams);
+		response = FlightApiRequest(url,requestParams);
 		System.out.println("finish API Request");
 		
 		if (response.equals("429")){
@@ -51,7 +51,7 @@ public class Request {
 		return data.getFlights();	
 	}	
 	
-	public static String ApiRequest (String urlString, Map<Object, Object> nameValuePairs) 
+	private static String FlightApiRequest (String urlString, Map<Object, Object> nameValuePairs) 
 			throws IOException, InterruptedException{
 
 		//Request for Session-----------------------------------------------------
@@ -127,7 +127,7 @@ public class Request {
 		
 		String response;
 		
-		response = AutosuggestRequest(urlAutosuggest, requestParams);
+		response = PlaceApiRequest(urlAutosuggest, requestParams);
 		//response = "{\"Places\":[{\"PlaceId\":\"EDI-sky\",\"PlaceName\":\"Edinburgh\",\"CountryId\":\"UK-sky\",\"RegionId\":\"\",\"CityId\":\"EDIN-sky\",\"CountryName\":\"United Kingdom\"},{\"PlaceId\":\"YEG-sky\",\"PlaceName\":\"Edmonton International\",\"CountryId\":\"CA-sky\",\"RegionId\":\"\",\"CityId\":\"YEAA-sky\",\"CountryName\":\"Canada\"},{\"PlaceId\":\"EDO-sky\",\"PlaceName\":\"Edremit / Korfez\",\"CountryId\":\"TR-sky\",\"RegionId\":\"\",\"CityId\":\"EDOA-sky\",\"CountryName\":\"Turkey\"},{\"PlaceId\":\"EDA-sky\",\"PlaceName\":\"Edna Bay\",\"CountryId\":\"US-sky\",\"RegionId\":\"AK\",\"CityId\":\"EDAA-sky\",\"CountryName\":\"United States\"},{\"PlaceId\":\"EOI-sky\",\"PlaceName\":\"Eday\",\"CountryId\":\"UK-sky\",\"RegionId\":\"\",\"CityId\":\"EOIA-sky\",\"CountryName\":\"United Kingdom\"},{\"PlaceId\":\"EDL-sky\",\"PlaceName\":\"Eldoret\",\"CountryId\":\"KE-sky\",\"RegionId\":\"\",\"CityId\":\"EDLA-sky\",\"CountryName\":\"Kenya\"},{\"PlaceId\":\"EDR-sky\",\"PlaceName\":\"Edward River\",\"CountryId\":\"AU-sky\",\"RegionId\":\"\",\"CityId\":\"KWMA-sky\",\"CountryName\":\"Australia\"},{\"PlaceId\":\"CNM-sky\",\"PlaceName\":\"Carlsbad\",\"CountryId\":\"US-sky\",\"RegionId\":\"NM\",\"CityId\":\"CNMA-sky\",\"CountryName\":\"United States\"},{\"PlaceId\":\"YYG-sky\",\"PlaceName\":\"Charlottetown\",\"CountryId\":\"CA-sky\",\"RegionId\":\"\",\"CityId\":\"YYGA-sky\",\"CountryName\":\"Canada\"},{\"PlaceId\":\"BNI-sky\",\"PlaceName\":\"Benin City\",\"CountryId\":\"NG-sky\",\"RegionId\":\"\",\"CityId\":\"BNIA-sky\",\"CountryName\":\"Nigeria\"}]}";
 
 		JSONParser parser = new JSONParser();
@@ -155,7 +155,7 @@ public class Request {
 		getPlaces("Kha");
 	}*/
 	
-	public static String AutosuggestRequest(String urlString, Map<Object, Object> nameValuePairs) throws IOException{
+	private static String PlaceApiRequest(String urlString, Map<Object, Object> nameValuePairs) throws IOException{
 				
 		//Request for info--------------------------------------------------------
 		
