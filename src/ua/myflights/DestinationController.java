@@ -133,7 +133,8 @@ public class DestinationController {
 							}
 						}
 					}
-					MyFlights.window.showMyDestinations(getDestinations(userId));				
+					MyFlights.window.destinationsView.showMyDestinations(getDestinations(userId));
+	//				MyFlights.window.showMyDestinations(getDestinations(userId));				
 				}catch (Exception e){
 					
 				}

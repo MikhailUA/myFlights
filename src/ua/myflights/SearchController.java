@@ -25,7 +25,8 @@ public class SearchController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				MyFlights.window.show(flights);
+				MyFlights.window.searchResultsView.show(flights);
+				//MyFlights.window.show(flights);
 				MyFlights.window.stopProgressBar();
 			};
 		};

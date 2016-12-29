@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -23,7 +25,7 @@ public class SearchResultsView extends JPanel {
 	private JProgressBar progressBar;
 	private JButton btnAddDestination;
 	private JTable searchResultsTable;
-	
+	private SearchResultsTableModel searchResultsTableModel;
 	
 	public SearchResultsView(){
 		
@@ -32,18 +34,19 @@ public class SearchResultsView extends JPanel {
 		lblSearchResults = new JLabel("Search results:");	
 		
 		progressBar = new JProgressBar();
-		progressBar.setIndeterminate(true);
-		
+		progressBar.setIndeterminate(true);		
 		progressBar.setVisible(false);
 				
 		btnAddDestination = new JButton("Add Destination");
 		
-		JScrollPane SRcontainer = new JScrollPane(searchResultsTable);
+		searchResultsTableModel = new SearchResultsTableModel();
+		searchResultsTable = new JTable(searchResultsTableModel);
 		
+		JScrollPane SRcontainer = new JScrollPane(searchResultsTable);
 		panel.add(lblSearchResults, "cell 0 0");
 		panel.add(progressBar, "cell 0 0, growx");
 		panel.add(btnAddDestination, "cell 0 2");
-		panel.add(SRcontainer, "cell 0 1,growx,height 100:100:100");
+		panel.add(SRcontainer, "cell 0 1, growx, height 200:200:200");		
 		
 		btnAddDestination.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -53,7 +56,7 @@ public class SearchResultsView extends JPanel {
 					int[] a = new int[5];
 					a = searchResultsTable.getSelectedRows();
 					Flight fSelected = searchResultsTableModel.getRowById(a[0]);
-					myFlightsTableModel.addFlight(fSelected);
+					MyFlights.window.destinationsView.myFlightsTableModel.addFlight(fSelected);
 					DestinationController.addDestionation(fSelected);
 				}else{
 					System.out.println("Please log in");
@@ -71,4 +74,13 @@ public class SearchResultsView extends JPanel {
 		return panel;
 	}
 
+	public void show(ArrayList<Flight> flights) {
+		if (flights == null){
+			JOptionPane.showMessageDialog(null, "Service Unavailable. Too many requests");
+		}else{
+			searchResultsTableModel.addFlights(flights);
+		}
+	}
+	
+	
 }

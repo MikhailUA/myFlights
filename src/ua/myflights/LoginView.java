@@ -22,9 +22,7 @@ public class LoginView extends JPanel {
 	private JTextField passwordField;
 	private JButton btnLogin;
 	private JButton btnLogout;
-	private JButton btnRegister;
-	
-	
+	private JButton btnRegister;	
 	
 	public LoginView(){
 		
@@ -95,4 +93,7 @@ public class LoginView extends JPanel {
 	public JPanel getPanel() {
 		return panel;
 	}
+	
+	
+
 }

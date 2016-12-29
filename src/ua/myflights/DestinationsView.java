@@ -3,6 +3,7 @@ package ua.myflights;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,6 +22,8 @@ public class DestinationsView extends JPanel {
 	private JButton btnDelete;
 	private JButton btnRefresh;
 	private JTable myFlightsTable;
+	public DestinationsModel myFlightsTableModel = new DestinationsModel();
+
 	
 	
 	public DestinationsView(){
@@ -28,11 +31,7 @@ public class DestinationsView extends JPanel {
 		panel = new JPanel(new MigLayout("", "[]", "[][][]"));
 		
 		lblMyDestinations = new JLabel("My Destinations:");	
-		
-		progressBar = new JProgressBar();
-		progressBar.setIndeterminate(true);		
-		progressBar.setVisible(false);
-				
+						
 		btnDelete = new JButton("Delete");		
 		btnRefresh = new JButton("Refresh");
 		
@@ -41,7 +40,6 @@ public class DestinationsView extends JPanel {
 		panel.add(myFcontainer);
 		
 		panel.add(lblMyDestinations, "cell 0 0");
-		panel.add(progressBar, "cell 0 0,growx");
 		panel.add(btnRefresh, "cell 0 2");
 		panel.add(btnDelete, "cell 0 2");
 		
@@ -56,8 +54,6 @@ public class DestinationsView extends JPanel {
 		});
 		
 		
-		btnDelete.setBounds(174, 405, 117, 23);
-		panel.add(btnDelete);
 		btnDelete.addActionListener(new ActionListener(){
 
 			@Override
@@ -83,5 +79,12 @@ public class DestinationsView extends JPanel {
 	public JPanel getPanel() {
 		return panel;
 	}
+	
+	public void showMyDestinations(ArrayList<Flight> flights) {
+		if (flights != null){
+			myFlightsTableModel.addFlights(flights);
+		}
+	}
+	
 
 }

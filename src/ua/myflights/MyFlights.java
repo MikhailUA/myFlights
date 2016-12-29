@@ -11,7 +11,7 @@ import org.json.simple.parser.ParseException;
 
 public class MyFlights { 
 
-	static mainView2 window;
+	static mainView window;
 	private static User LoggedInUser;
 	
 	public static void main(String[] args) {
@@ -20,9 +20,8 @@ public class MyFlights {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						//window = new mainView();
-						window = new mainView2();
-		//				loginView = new loginView();
+						window = new mainView();
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
