@@ -1,12 +1,9 @@
 package ua.myflights;
 
 import java.awt.EventQueue;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
-import org.json.simple.parser.ParseException;
 // https://creately.com/diagram/iwcd4i3f1
 
 public class MyFlights { 
@@ -21,7 +18,7 @@ public class MyFlights {
 				public void run() {
 					try {
 						window = new mainView();
-		//				loginView = new loginView();
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

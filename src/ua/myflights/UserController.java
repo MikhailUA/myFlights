@@ -2,7 +2,6 @@ package ua.myflights;
 
 import java.awt.HeadlessException;
 import java.sql.*;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -34,28 +33,22 @@ public class UserController {
 	}
 	
 	public static void login(String username, String password) throws SQLException{
-		ArrayList<Flight> flights = null;
 		Connection conn = MySqlConnection.dbConnect();
 		String Sql = "Select * from user where username=? and password=?";
-
-		if(!conn.isClosed()){
 		
-			PreparedStatement pst = conn.prepareStatement(Sql);
-			pst.setString(1, username);
-			pst.setString(2, password);
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()){
-				MyFlights.setLoggedInUser(getUser(rs.getInt("id")));
-				MyFlights.window.showLoggedInUsername(username);
-				MyFlights.window.showMyDestinations(DestinationController.getDestinations(rs.getInt("id")));
-				JOptionPane.showMessageDialog(null, "Logged in. Id: " + MyFlights.getLoggedInUser().getId());
-			}else{
-				JOptionPane.showMessageDialog(null, "Invalid credetentials", "Error", JOptionPane.ERROR_MESSAGE);			
-			}
+		PreparedStatement pst = conn.prepareStatement(Sql);
+		pst.setString(1, username);
+		pst.setString(2, password);
+		ResultSet rs = pst.executeQuery();
+		
+		if (rs.next()){
+			MyFlights.setLoggedInUser(getUser(rs.getInt("id")));
+			MyFlights.window.showLoggedInUsername(username);
+			MyFlights.window.destinationsView.showMyDestinations(DestinationController.getDestinations(rs.getInt("id")));
+			JOptionPane.showMessageDialog(null, "Logged in. Id: " + MyFlights.getLoggedInUser().getId());
 		}else{
-			System.out.println("connection closed");
-		};	
+			JOptionPane.showMessageDialog(null, "Invalid credetentials", "Error", JOptionPane.ERROR_MESSAGE);			
+		}
 		
 		conn.close();
 	}
@@ -101,17 +94,16 @@ public class UserController {
 		String Sql = "Select * from user where username=?";
 
 		try {
-			if(!conn.isClosed()){
 			
-				PreparedStatement pst = conn.prepareStatement(Sql);
-				pst.setString(1, username);
-				ResultSet rs = pst.executeQuery();
-				
-				if (rs.next()){
-					usr.setId(rs.getInt("id"));
-					usr.setUsername(rs.getString("username"));
-				}
+			PreparedStatement pst = conn.prepareStatement(Sql);
+			pst.setString(1, username);
+			ResultSet rs = pst.executeQuery();
+			
+			if (rs.next()){
+				usr.setId(rs.getInt("id"));
+				usr.setUsername(rs.getString("username"));
 			}
+			
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

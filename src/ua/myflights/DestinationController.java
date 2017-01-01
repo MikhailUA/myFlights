@@ -1,17 +1,13 @@
 package ua.myflights;
 
 import java.awt.HeadlessException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.swing.JOptionPane;
 
 public class DestinationController {
 	
@@ -51,11 +47,12 @@ public class DestinationController {
 		Connection conn = MySqlConnection.dbConnect();
 		String Sql = "DELETE from destination WHERE distId=? and userId=?";
 
-		try {			
+		try {		
 			PreparedStatement pst = conn.prepareStatement(Sql);
 			pst.setString(1, distId);
 			pst.setInt(2, userId);
-			pst.execute();			
+			pst.execute();							
+
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,9 +89,8 @@ public class DestinationController {
 			f.setDepartureTime(rs.getString("departure"));
 			
 			flights.add(f);
-
 		}
-	
+		
 		conn.close();
 		return flights;
 	}
@@ -125,7 +121,7 @@ public class DestinationController {
 							}
 						}
 					}
-					MyFlights.window.showMyDestinations(getDestinations(userId));				
+					MyFlights.window.destinationsView.showMyDestinations(getDestinations(userId));			
 				}catch (Exception e){
 					
 				}
@@ -138,16 +134,13 @@ public class DestinationController {
 	private static void updateDestination( int DBid, double priceUpdated) throws SQLException{
 		Connection conn = MySqlConnection.dbConnect();
 		String Sql = "UPDATE `destination` SET `priceUpdated`= ?,`updatedAt`= ? WHERE `id`= ?";
-		
-		if(!conn.isClosed()){
 			
-			PreparedStatement pst = conn.prepareStatement(Sql);
-			pst.setDouble(1, priceUpdated);
-			pst.setString(2, MyFlights.getCurrentDate());
-			pst.setInt(3, DBid);
-			pst.execute();
-		}
-		
+		PreparedStatement pst = conn.prepareStatement(Sql);
+		pst.setDouble(1, priceUpdated);
+		pst.setString(2, MyFlights.getCurrentDate());
+		pst.setInt(3, DBid);
+		pst.execute();
+				
 		conn.close();
 		
 	}
