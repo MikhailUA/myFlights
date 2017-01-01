@@ -1,14 +1,13 @@
 package ua.myflights;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
@@ -19,7 +18,7 @@ public class LoginView extends JPanel {
 	private JLabel lblLogin; 
 	private JLabel lblPassword;
 	private JTextField loginField;
-	private JTextField passwordField;
+	private JPasswordField passwordField;
 	private JButton btnLogin;
 	private JButton btnLogout;
 	private JButton btnRegister;	
@@ -33,7 +32,7 @@ public class LoginView extends JPanel {
 		lblPassword = new JLabel("Password: ");
 		
 		loginField = new JTextField();
-		passwordField = new JTextField();
+		passwordField = new JPasswordField();
 		
 		btnLogin = new JButton("Login");
 		btnLogout = new JButton("Logout");

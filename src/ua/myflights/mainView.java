@@ -1,17 +1,9 @@
 package ua.myflights;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.util.ArrayList;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
 import net.miginfocom.swing.MigLayout;
 
 public class mainView extends JFrame{
@@ -33,16 +25,17 @@ public class mainView extends JFrame{
 
 		frmMyflights = new JFrame();
 		frmMyflights.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmMyflights.getContentPane().setLayout(new MigLayout());			
+		frmMyflights.getContentPane().setLayout(new MigLayout());
+		frmMyflights.setTitle("myFlights");
 		
 		lblUsernameUser = new JLabel("Logged out");
 		
 		frmMyflights.add(lblUsernameUser, "cell 0 0");
-		frmMyflights.add(new LoginView().getPanel(), "cell 1 1");
 		frmMyflights.add(new SearchFormView().getPanel(), "cell 0 1");
-		frmMyflights.add(searchResultsView.getPanel(), "cell 0 2");
-		frmMyflights.add(destinationsView.getPanel(), "cell 0 3");		
-		/**/
+		frmMyflights.add(new LoginView().getPanel(), "cell 0 1, wrap");
+		frmMyflights.add(searchResultsView.getPanel(), "wrap, pushx, growx");
+		frmMyflights.add(destinationsView.getPanel(), "pushx, growx");
+	
 		frmMyflights.pack();
 		frmMyflights.setVisible(true);
 		
@@ -100,14 +93,6 @@ public class mainView extends JFrame{
 	
 	public void hideLoggedInUsername(){
 		lblUsernameUser.setText("Logged out");
-	}
-	
-	public void startProgressBar(){
-		//this.progressBar.setVisible(true);
-	}
-	
-	public void stopProgressBar(){
-		//this.progressBar.setVisible(false);
 	}
 	
 	public void refreshDestinationTable(){

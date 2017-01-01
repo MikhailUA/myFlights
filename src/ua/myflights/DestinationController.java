@@ -1,17 +1,13 @@
 package ua.myflights;
 
 import java.awt.HeadlessException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.swing.JOptionPane;
 
 public class DestinationController {
 	
@@ -52,13 +48,11 @@ public class DestinationController {
 		Connection conn = MySqlConnection.dbConnect();
 		String Sql = "DELETE from destination WHERE distId=? and userId=?";
 
-		try {
-			if(!conn.isClosed()){			
-				PreparedStatement pst = conn.prepareStatement(Sql);
-				pst.setString(1, distId);
-				pst.setInt(2, userId);
-				pst.execute();				
-			}
+		try {		
+			PreparedStatement pst = conn.prepareStatement(Sql);
+			pst.setString(1, distId);
+			pst.setInt(2, userId);
+			pst.execute();							
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,36 +66,30 @@ public class DestinationController {
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		Connection conn = MySqlConnection.dbConnect();
 		String Sql = "Select * from destination where userId=?";
-
-		if(!conn.isClosed()){
 		
-			PreparedStatement pst = conn.prepareStatement(Sql);
-			pst.setInt(1, userId);
-			ResultSet rs = pst.executeQuery();
+		PreparedStatement pst = conn.prepareStatement(Sql);
+		pst.setInt(1, userId);
+		ResultSet rs = pst.executeQuery();
+		
+		while (rs.next()){
+			Flight f = new Flight();
+			f.setDBid(rs.getInt("id"));
+			f.setDistId(rs.getString("distId"));
+			f.setOriginStationName(rs.getString("originStation"));
+			f.setOriginStationCode(rs.getString("originStationCode"));
 			
-			while (rs.next()){
-				Flight f = new Flight();
-				f.setDBid(rs.getInt("id"));
-				f.setDistId(rs.getString("distId"));
-				f.setOriginStationName(rs.getString("originStation"));
-				f.setOriginStationCode(rs.getString("originStationCode"));
-				
-				f.setDestinationStationName(rs.getString("destinationStation"));
-				f.setDestinationStationCode(rs.getString("destinationStationCode"));
+			f.setDestinationStationName(rs.getString("destinationStation"));
+			f.setDestinationStationCode(rs.getString("destinationStationCode"));
 
-				f.setPrice(rs.getDouble("price"));
-				f.setPriceUpdated(rs.getDouble("priceUpdated"));
-				
-				f.setDuration(rs.getLong("duration"));
-				f.setArrivalTime(rs.getString("arrival"));
-				f.setDepartureTime(rs.getString("departure"));
-				
-				flights.add(f);
-
-			}
-		}else{
-			System.out.println("connection closed");
-		};	
+			f.setPrice(rs.getDouble("price"));
+			f.setPriceUpdated(rs.getDouble("priceUpdated"));
+			
+			f.setDuration(rs.getLong("duration"));
+			f.setArrivalTime(rs.getString("arrival"));
+			f.setDepartureTime(rs.getString("departure"));
+			
+			flights.add(f);
+		}
 		
 		conn.close();
 		return flights;
@@ -133,8 +121,7 @@ public class DestinationController {
 							}
 						}
 					}
-					MyFlights.window.destinationsView.showMyDestinations(getDestinations(userId));
-	//				MyFlights.window.showMyDestinations(getDestinations(userId));				
+					MyFlights.window.destinationsView.showMyDestinations(getDestinations(userId));			
 				}catch (Exception e){
 					
 				}
@@ -148,16 +135,13 @@ public class DestinationController {
 	public static void updateDestination( int DBid, double priceUpdated) throws SQLException{
 		Connection conn = MySqlConnection.dbConnect();
 		String Sql = "UPDATE `destination` SET `priceUpdated`= ?,`updatedAt`= ? WHERE `id`= ?";
-		
-		if(!conn.isClosed()){
 			
-			PreparedStatement pst = conn.prepareStatement(Sql);
-			pst.setDouble(1, priceUpdated);
-			pst.setString(2, MyFlights.getCurrentDate());
-			pst.setInt(3, DBid);
-			pst.execute();
-		}
-		
+		PreparedStatement pst = conn.prepareStatement(Sql);
+		pst.setDouble(1, priceUpdated);
+		pst.setString(2, MyFlights.getCurrentDate());
+		pst.setInt(3, DBid);
+		pst.execute();
+				
 		conn.close();
 		
 	}

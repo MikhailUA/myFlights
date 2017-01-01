@@ -23,12 +23,10 @@ public class DestinationsView extends JPanel {
 	private JButton btnRefresh;
 	private JTable myFlightsTable;
 	public DestinationsModel myFlightsTableModel = new DestinationsModel();
-
-	
 	
 	public DestinationsView(){
 		
-		panel = new JPanel(new MigLayout("", "[]", "[][][]"));
+		panel = new JPanel(new MigLayout());
 		
 		lblMyDestinations = new JLabel("My Destinations:");	
 						
@@ -36,14 +34,21 @@ public class DestinationsView extends JPanel {
 		btnRefresh = new JButton("Refresh");
 		
 		myFlightsTable = new JTable(myFlightsTableModel);
+		
+		myFlightsTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+		myFlightsTable.getColumnModel().getColumn(1).setPreferredWidth(30);
+		myFlightsTable.getColumnModel().getColumn(2).setPreferredWidth(30);
+		myFlightsTable.getColumnModel().getColumn(3).setPreferredWidth(30);
+		myFlightsTable.getColumnModel().getColumn(4).setPreferredWidth(30);
+		
 		JScrollPane myFcontainer = new JScrollPane(myFlightsTable);
 		panel.add(myFcontainer);
 		
-		panel.add(lblMyDestinations, "cell 0 0");
-		panel.add(btnRefresh, "cell 0 2");
-		panel.add(btnDelete, "cell 0 2");
+		panel.add(lblMyDestinations, "wrap");
+		panel.add(myFcontainer, "wrap, pushx, growx, height 150:150:150");
 		
-		panel.add(myFcontainer, "cell 0 1,growx,height 100:100:100");
+		panel.add(btnRefresh, "cell 0 2");
+		panel.add(btnDelete, "cell 0 2");		
 		
 		btnRefresh.addActionListener(new ActionListener(){
 			
@@ -52,7 +57,6 @@ public class DestinationsView extends JPanel {
 				DestinationController.refreshDestinations(MyFlights.getLoggedInUser().getId());
 				}
 		});
-		
 		
 		btnDelete.addActionListener(new ActionListener(){
 

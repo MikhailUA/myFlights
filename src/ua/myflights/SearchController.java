@@ -11,7 +11,7 @@ public class SearchController {
 	
 		Thread t = new Thread (){
 			public void run(){
-				MyFlights.window.startProgressBar();
+				MyFlights.window.searchResultsView.startProgressBar();
 				ArrayList<Flight> flights = null;
 				try {
 				  flights = Request.getData(From, To, date);
@@ -26,8 +26,7 @@ public class SearchController {
 					e.printStackTrace();
 				}
 				MyFlights.window.searchResultsView.show(flights);
-				//MyFlights.window.show(flights);
-				MyFlights.window.stopProgressBar();
+				MyFlights.window.searchResultsView.stopProgressBar();
 			};
 		};
 		
@@ -42,67 +41,7 @@ public class SearchController {
 		for (int i = 0; i< Places.size(); i++){
 			System.out.println(Places.get(i).getPlaceName() + ", " + Places.get(i).getPlaceId());
 		}
-		//MyFlights.window.updateSearchBox(Places);
-	}
-	
-	
-	public static void badRequest(String code){
-		if (code == "429"){}
-	}
-		
-}
-
-
-
-
-
-/*class MyTimer extends Thread{
-private boolean stopper = false;
-public void run(){
-	while(true){
-		if (stopper == true){
-			break; 
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.print(".");
 	}
 }
-
-public void setStop(){
-	stopper = true;
-}
-};
-
-MyTimer timer = new MyTimer();*/ 
-
-
-//timer.start();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//flight = Request.getData("HRK-sky", "KIEV-sky","2016-12-15");
-//flights =  new ArrayList<Flight>();
-//flights = Request.getData(From, To, date);	
-
-
-
 
 
