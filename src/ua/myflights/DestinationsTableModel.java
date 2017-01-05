@@ -3,12 +3,12 @@ package ua.myflights;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
-class DestinationsModel extends AbstractTableModel{
+class DestinationsTableModel extends AbstractTableModel{
 
 	private String[] columnNames = {"From", "To", "Price","PriceUpdated", "Duration", "Departure", "Arrival"};
 	private ArrayList<Flight> flights;
 
-	public DestinationsModel(){
+	public DestinationsTableModel(){
 		flights = new ArrayList<Flight>();
 	}
 	

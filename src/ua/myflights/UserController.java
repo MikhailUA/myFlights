@@ -44,7 +44,7 @@ public class UserController {
 		if (rs.next()){
 			MyFlights.setLoggedInUser(getUser(rs.getInt("id")));
 			MyFlights.window.showLoggedInUsername(username);
-			MyFlights.window.destinationsView.showMyDestinations(DestinationController.getDestinations(rs.getInt("id")));
+			MyFlights.window.destinationsView.showMyDestinations(DestinationModel.getUserDestinations(rs.getInt("id")));
 			JOptionPane.showMessageDialog(null, "Logged in. Id: " + MyFlights.getLoggedInUser().getId());
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid credetentials", "Error", JOptionPane.ERROR_MESSAGE);			

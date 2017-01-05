@@ -11,7 +11,7 @@ public class mainView extends JFrame{
 
 	private JFrame frmMyflights;
 	private JLabel lblUsernameUser;
-	private DestinationsModel myFlightsTableModel = new DestinationsModel();
+	private DestinationsTableModel myFlightsTableModel = new DestinationsTableModel();
 	private SearchResultsTableModel searchResultsTableModel = new SearchResultsTableModel();
 	public SearchResultsView searchResultsView = new SearchResultsView();
 	public DestinationsView destinationsView = new DestinationsView();
@@ -82,7 +82,7 @@ public class mainView extends JFrame{
 		});		
 	}*/
 
-	public DestinationsModel getMyFlightsTableModel() {
+	public DestinationsTableModel getMyFlightsTableModel() {
 		return myFlightsTableModel;
 	}
 

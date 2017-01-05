@@ -22,7 +22,7 @@ public class DestinationsView extends JPanel {
 	private JButton btnDelete;
 	private JButton btnRefresh;
 	private JTable myFlightsTable;
-	public DestinationsModel myFlightsTableModel = new DestinationsModel();
+	public DestinationsTableModel myFlightsTableModel = new DestinationsTableModel();
 	
 	public DestinationsView(){
 		
